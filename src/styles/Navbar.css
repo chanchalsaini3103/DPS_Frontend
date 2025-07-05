@@ -66,6 +66,7 @@
 
 .dps-btn.login {
   background-color: #7a3e8e; /* VIBGYOR purple */
+   text-decoration: none;
 }
 
 .dps-navbar {

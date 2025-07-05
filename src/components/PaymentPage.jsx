@@ -3,7 +3,7 @@ import "../styles/Register.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Swal from "sweetalert2";
 
-const PaymentPage = () => {
+const PaymentPage = ({ goToPrevStep }) => {
   const handlePayment = () => {
     Swal.fire({
       title: "Confirm Payment",
@@ -48,6 +48,10 @@ const PaymentPage = () => {
           </ul>
 
           <div className="text-center">
+            <button type="button" className="btn btn-secondary me-3" onClick={goToPrevStep}>
+              Previous
+            </button>
+
             <button className="btn btn-primary btn-lg" onClick={handlePayment}>
               Proceed to Payment
             </button>

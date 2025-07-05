@@ -1,14 +1,17 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+
 import "bootstrap/dist/css/bootstrap.min.css";
 
-const DeclarationPage = ({ studentData, parentData, goToNextStep }) => {
-  const handleProceed = () => {
-    if (!studentData.firstName || !parentData.fatherName) {
-      alert("Please complete and save student and parent details first.");
-      return;
-    }
-    goToNextStep();
-  };
+const DeclarationPage = ({goToPrevStep, studentData, parentData, goToNextStep }) => {
+const [checked, setChecked] = useState(false);
+const handleProceed = () => {
+  if (!checked) {
+    alert("Please agree to the declaration before proceeding.");
+    return;
+  }
+  goToNextStep();
+};
+
 
   return (
     <div className="container mt-4 mb-5 p-4 border rounded shadow-sm">
@@ -39,13 +42,17 @@ const DeclarationPage = ({ studentData, parentData, goToNextStep }) => {
         </ul>
       </div>
 
-      <div className="alert alert-info">
-        <p className="mb-0">
-          I hereby declare that the information provided is true and correct to the best of my knowledge and belief.
-        </p>
-      </div>
+      <div className="form-check mt-3">
+  <input className="form-check-input" type="checkbox" id="agree" onChange={(e) => setChecked(e.target.checked)} />
+  <label className="form-check-label" htmlFor="agree">
+    I confirm the above information is correct and I agree to the declaration.
+  </label>
+</div>
+
 
       <div className="text-center mt-4">
+        <button type="button" className="btn btn-secondary" onClick={goToPrevStep}>Previous</button>
+
         <button className="btn btn-success btn-lg" onClick={handleProceed}>
           Proceed to Payment
         </button>

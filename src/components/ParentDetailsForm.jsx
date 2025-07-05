@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import Swal from "sweetalert2";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-const ParentDetailsForm = ({ goToNextStep, selectedParentType, parentEmail, parentPhone, saveParentData }) => {
+const ParentDetailsForm = ({ goToNextStep,goToPrevStep, selectedParentType, parentEmail, parentPhone, saveParentData }) => {
   const [formData, setFormData] = useState({
     fatherName: "",
     fatherEmail: "",
@@ -97,6 +97,8 @@ const ParentDetailsForm = ({ goToNextStep, selectedParentType, parentEmail, pare
         </div>
 
         <div className="d-flex justify-content-center gap-3 mt-4">
+          <button type="button" className="btn btn-secondary" onClick={goToPrevStep}>Previous</button>
+
           <button type="submit" className="btn btn-outline-success">Save</button>
           <button type="button" className="btn btn-primary" onClick={handleNext}>Next</button>
         </div>

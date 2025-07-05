@@ -5,6 +5,7 @@ import ParentDetailsForm from "./ParentDetailsForm";
 import DeclarationPage from "./DeclarationPage";
 import PaymentPage from "./PaymentPage";
 import Swal from "sweetalert2"; // at top of file
+import Footer from "./Footer";
 
 const Register = () => {
   const [email, setEmail] = useState("");
@@ -21,13 +22,41 @@ const Register = () => {
   const [studentData, setStudentData] = useState({});
   const [parentData, setParentData] = useState({});
 
-  useEffect(() => {
-    let interval;
-    if (timer > 0) {
-      interval = setInterval(() => setTimer((prev) => prev - 1), 1000);
-    }
-    return () => clearInterval(interval);
-  }, [timer]);
+ useEffect(() => {
+  if (step === "PAYMENT") {
+  const requestBody = {
+    ...studentData,
+    parent: parentData,
+  };
+
+  fetch("http://localhost:8082/register", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(requestBody),
+  })
+
+      .then((res) => {
+        if (!res.ok) throw new Error("Failed to save data");
+        return res.json();
+      })
+      .then((data) => {
+        console.log("Saved to DB:", data);
+        alert("Data saved to database successfully!");
+      })
+      .catch((err) => {
+        console.error(err);
+        alert("Something went wrong while saving data.");
+      });
+  }
+}, [step]);
+const handlePrev = () => {
+  const steps = ["INTRODUCTION", "STUDENT DETAILS", "PARENT INFORMATION", "DECLARATION", "PAYMENT"];
+  const currentIndex = steps.indexOf(step);
+  if (currentIndex > 0) {
+    setStep(steps[currentIndex - 1]);
+  }
+};
+
 
   const validateInputs = () => {
     const phoneRegex = /^[0-9]{10}$/;
@@ -114,7 +143,7 @@ const Register = () => {
             Nyati Estate Rd, Nyati County, Mohammed Wadi, Pune, Autadwadi Handewadi,<br />
 Maharashtra 411060 <br />
             E-mail: <a href="mailto:dps@example.com">dps@example.com</a><br />
-            Phone: 020 123456 / +91 7821820239
+            Phone: 020 26522100 / +91 7821820239
           </p>
         </div>
       </div>
@@ -201,9 +230,11 @@ Maharashtra 411060 <br />
 
       {step === "STUDENT DETAILS" && (
         <StudentDetailsForm
-          goToNextStep={() => setStep("PARENT INFORMATION")}
-          saveStudentData={(data) => setStudentData(data)}
-        />
+  goToNextStep={() => setStep("PARENT INFORMATION")}
+  goToPrevStep={handlePrev}
+  saveStudentData={(data) => setStudentData(data)}
+/>
+
       )}
 
       {step === "PARENT INFORMATION" && (
@@ -211,6 +242,7 @@ Maharashtra 411060 <br />
           selectedParentType={parentType}
           parentEmail={email}
           parentPhone={phone}
+          goToPrevStep={() => setStep("STUDENT DETAILS")}
           goToNextStep={() => setStep("DECLARATION")}
           saveParentData={(data) => setParentData(data)}
         />
@@ -220,13 +252,21 @@ Maharashtra 411060 <br />
         <DeclarationPage
           studentData={studentData}
           parentData={parentData}
+           goToPrevStep={() => setStep("PARENT INFORMATION")}
           goToNextStep={() => setStep("PAYMENT")}
         />
       )}
 
       {step === "PAYMENT" && (
-        <PaymentPage />
+        <PaymentPage
+        
+        studentData={studentData}
+  parentData={parentData}
+  goToPrevStep={() => setStep("DECLARATION")}
+        />
+        
       )}
+      <Footer />
     </div>
   );
 };
