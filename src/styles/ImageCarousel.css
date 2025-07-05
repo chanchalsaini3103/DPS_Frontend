@@ -2,7 +2,8 @@
   width: 100%;
   overflow: hidden;
   padding: 40px 0;
-  background: #f8f9fa;
+  background: white;
+  margin-bottom: 100px;
 }
 
 .auto-carousel-track {

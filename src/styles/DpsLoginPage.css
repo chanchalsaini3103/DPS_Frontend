@@ -1,0 +1,176 @@
+.dps-login-container {
+  display: flex;
+  height: 100vh;
+  font-family: 'Segoe UI', sans-serif;
+  border: none;
+  margin: 0;
+  padding: 10px;
+
+}
+
+.dps-left-banner {
+  flex: 6;
+  background: white;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border: none;
+}
+
+.dps-right-login {
+  flex: 4;
+  background: white;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+ 
+  border: none;
+}
+
+.dps-logo {
+  width: 120px;
+  margin-bottom: 20px;
+}
+
+.social {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.social .icons svg {
+  font-size: 18px;
+  margin-left: 10px;
+  color: #2b3a83;
+  cursor: pointer;
+}
+
+.banner-img {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  margin: 20px 0;
+}
+
+.banner-text {
+  margin-top: 10px;
+}
+
+.banner-text h2 {
+  color: #2b3a83;
+  font-weight: bold;
+  font-size: 24px;
+}
+
+.banner-text p {
+  color: #333;
+  margin: 6px 0;
+  font-size: 15px;
+}
+
+.subtext {
+  font-size: 14px;
+  color: #555;
+  margin-bottom: 20px;
+}
+
+.login-form {
+  width: 100%;
+  max-width: 320px;
+  display: flex;
+  flex-direction: column;
+}
+
+.login-form input {
+  padding: 12px;
+  margin: 10px 0;
+  border: 1px solid #aaa;
+  border-radius: 4px;
+  font-size: 16px;
+}
+
+.forgot-link {
+  text-align: right;
+  margin-bottom: 20px;
+}
+
+.forgot-link a {
+  color: red;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.login-btn {
+  background-color: #c62828;
+  color: #fff;
+  padding: 12px;
+  border: none;
+  border-radius: 25px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.login-btn:hover {
+  background-color: #b71c1c;
+}
+.dps-top-navbar {
+  width: 100%;
+  padding: 10px 20px;
+  
+  background-color: #2b3a83;
+  color: #fff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.navbar-left .back-link {
+  color: #fff;
+  font-size: 14px;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.navbar-left .back-link:hover {
+  text-decoration: underline;
+}
+
+.navbar-center {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.nav-logo {
+  height: 30px;
+}
+
+.school-name {
+  font-size: 16px;
+  font-weight: bold;
+}
+.login-links {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.forgot-link, .register-link {
+  color: #d32f2f;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.register-link:hover,
+.forgot-link:hover {
+  text-decoration: underline;
+}
+body {
+  margin: 0;
+  padding: 0;
+}

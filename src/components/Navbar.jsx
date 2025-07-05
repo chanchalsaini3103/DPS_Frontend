@@ -2,6 +2,7 @@ import React from "react";
 import "../styles/Navbar.css";
 import { Navbar, Nav, NavDropdown, Container } from "react-bootstrap";
 import { FaRegFileAlt, FaUser } from "react-icons/fa";
+import { Link } from 'react-router-dom';
 import schoolImage from '/schoolimg.png';
 const images = [
   '/images/kid1.jpg',
@@ -44,10 +45,12 @@ const AppNavbar = () => {
               <FaRegFileAlt style={{ marginRight: "5px" }} />
               INQUIRY FORM
             </button>
-            <button className="dps-btn login">
-              <FaUser style={{ marginRight: "5px" }} />
-              PARENT LOGIN
-            </button>
+           <Link to="/dps-login">
+  <button className="dps-btn login">
+    <FaUser style={{ marginRight: "5px" }} />
+    PARENT LOGIN
+  </button>
+</Link>
           </div>
 
           <Navbar expand="lg" className="dps-navbar">

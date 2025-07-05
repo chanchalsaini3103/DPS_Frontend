@@ -1,0 +1,63 @@
+/* Main container with blue border and shadow */
+.student-form-container {
+  border: 2px solid #2b3a83;
+  border-radius: 10px;
+  padding: 30px;
+  background-color: #ffffff;
+}
+
+/* Title styling */
+.student-form-title {
+  font-size: 24px;
+  font-weight: bold;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+/* Form instruction note */
+.student-form-note {
+  font-size: 14px;
+  font-style: italic;
+  margin-bottom: 15px;
+  color: #444;
+}
+
+/* Form footer note */
+.student-form-footer {
+  font-size: 13px;
+  font-style: italic;
+  color: #777;
+  text-align: center;
+}
+
+/* Input fields spacing */
+.student-form-container .form-control,
+.student-form-container .form-select {
+  height: 40px;
+  font-size: 15px;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+/* Labels */
+.student-form-container .form-label {
+  font-weight: 500;
+  color: #333;
+}
+
+/* Button group spacing */
+.student-form-container .btn {
+  min-width: 120px;
+  font-weight: 500;
+  font-family: 'Segoe UI', sans-serif;
+  border-radius: 20px;
+}
+
+/* Save success highlight */
+.swal2-popup .swal2-title {
+  font-family: 'Segoe UI', sans-serif;
+}
+
+/* Add a subtle hover effect to buttons */
+.student-form-container .btn:hover {
+  opacity: 0.9;
+  transition: 0.3s ease;
+}

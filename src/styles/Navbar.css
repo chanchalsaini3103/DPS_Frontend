@@ -208,7 +208,7 @@
 }
 
 .school-red {
-  color: #b91c1c;
+  color: #083d7c;
   font-size: 34px;
   font-weight: 700;
 }
@@ -277,12 +277,12 @@
 
 .icon {
   font-size: 34px;
-  color: #1e6b1e;
+  color: #7a3e8e;
   margin-bottom: 12px;
 }
 
 .info-card h3 {
-  color: #145a32;
+  color: #7a3e8e;
   font-size: 1.25rem;
   margin-bottom: 10px;
 }
@@ -314,7 +314,7 @@
   top: -80px;
   left: 50%;
   transform: translateX(-50%);
-  background-color: #c80000;
+  background-color: #083d7c;
   color: white;
   border-radius: 12px;
   padding: 30px 40px;
@@ -354,7 +354,7 @@
 
 .apply-button:hover {
   background-color: white;
-  color: #c80000;
+  color: #1b1f58;
 }
 
 /* Footer Section */
