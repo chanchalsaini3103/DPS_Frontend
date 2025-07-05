@@ -1,5 +1,5 @@
 import React from "react";
-import "../styles/DPSLoginPage.css";
+import "../styles/DpsLoginPage.css";
 import { FaFacebookF, FaInstagram, FaYoutube } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
