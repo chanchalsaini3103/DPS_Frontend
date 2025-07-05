@@ -1,0 +1,46 @@
+.counter-section {
+  background-color: #b50000;
+  color: white;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  padding: 60px 20px;
+  flex-wrap: wrap;
+  text-align: center;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.counter-box {
+  flex: 1 1 200px;
+  margin: 20px;
+  min-width: 180px;
+}
+
+.count {
+  font-size: 48px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.label {
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.4;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  white-space: pre-line;
+}
+.counter-section {
+  background-color: #b50000;
+  color: white;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  padding: 60px 20px;
+  margin: 60px auto; /* Added margin around the section */
+  border-radius: 12px; /* Optional: soft rounded corners */
+  max-width: 1200px;   /* Optional: limit width */
+  flex-wrap: wrap;
+  text-align: center;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
