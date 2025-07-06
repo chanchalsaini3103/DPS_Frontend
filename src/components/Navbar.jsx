@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "../styles/Navbar.css";
 import { Navbar, Nav, NavDropdown, Container } from "react-bootstrap";
 import { FaRegFileAlt, FaUser } from "react-icons/fa";
@@ -21,8 +21,10 @@ import {
 } from "react-icons/fa";
 import CounterSection from "./CounterSection";
 import ImageCarousel from "./ImageCarousel";
+import EnquiryForm from "./EnquiryForm";
 
 const AppNavbar = () => {
+  const [showForm, setShowForm] = useState(false);
   return (
     <div className="dps-wrapper">
       <div className="dps-nav-row">
@@ -44,10 +46,19 @@ const AppNavbar = () => {
 
         <div className="dps-right-content">
           <div className="dps-top-buttons">
-            <button className="dps-btn inquiry">
-              <FaRegFileAlt style={{ marginRight: "5px" }} />
-              INQUIRY FORM
-            </button>
+             <button className="dps-btn inquiry" onClick={() => setShowForm(!showForm)}>
+        <FaRegFileAlt style={{ marginRight: "5px" }} />
+        INQUIRY FORM
+      </button>
+{showForm && (
+  <div className="enquiry-modal-overlay">
+    <div className="enquiry-modal-content">
+      <button className="close-btn" onClick={() => setShowForm(false)}>✕</button>
+      <EnquiryForm />
+    </div>
+  </div>
+)}
+
             <Link
   to="/dps-login"
   className="dps-btn login"
@@ -110,7 +121,7 @@ const AppNavbar = () => {
       </div>
       <section className="welcome-container">
         <div className="image-container">
-          <img src={schoolImage} alt="Symbiosis International School" />
+          <img src={schoolImage} alt="Delhi Public School" />
         </div>
         <div className="text-container">
           <h2>
@@ -213,12 +224,10 @@ const AppNavbar = () => {
           <div className="footer-container">
             <div className="footer-column">
               <h3>
-                Symbiosis <br />
-                International School
+                Delhi <br />
+                Public School
               </h3>
               <p>
-                Delhi Public School,
-                <br />
                 Nyati Estate Rd, Nyati County, Mohammed Wadi
                 <br />
                  Autadwadi Handewadi,
