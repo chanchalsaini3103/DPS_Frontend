@@ -128,7 +128,7 @@ const Register = () => {
   <ol>
     <li>The submission of the Application Form does <strong>not</strong> imply an admission of your child to the school.</li>
     <li>The Application Form should be complete in all respects, and the information provided should be true.</li>
-    <li>After submission, parents will receive an acknowledgement. If not received, check spam or email <a href="mailto:admissionsinfo@sis.ac.in">admissionsinfo@sis.ac.in</a>.</li>
+    <li>After submission, parents will receive an acknowledgement. If not received, check spam or email <a href="mailto:dps@example.com">dps@example.com</a>.</li>
     <li>One Application Form per child is required.</li>
     <li>The Application Form is divided into  sections.</li>
     <li>It can be saved and accessed later via email link.</li>
