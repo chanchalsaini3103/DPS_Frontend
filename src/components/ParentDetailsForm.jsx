@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Swal from "sweetalert2";
 import "bootstrap/dist/css/bootstrap.min.css";
+import "../styles/StudentDetailsForm.css"; // Reusing the same styling
 
 const ParentDetailsForm = ({ goToNextStep, goToPrevStep, selectedParentType, parentEmail, parentPhone, saveParentData }) => {
   const [formData, setFormData] = useState({
@@ -33,7 +34,7 @@ const ParentDetailsForm = ({ goToNextStep, goToPrevStep, selectedParentType, par
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
-    setIsSaved(false); // Reset isSaved if user modifies input
+    setIsSaved(false);
   };
 
   const handleSave = (e) => {
@@ -59,52 +60,40 @@ const ParentDetailsForm = ({ goToNextStep, goToPrevStep, selectedParentType, par
   };
 
   return (
-    <div className="container mt-4 mb-5 p-4 border rounded shadow-sm">
-      <p className="text-danger mb-3">
+    <div className="student-form-container">
+      <p className="student-form-note text-danger mb-3">
         <strong>Note:</strong> Please click “Save” before clicking “Next”.
       </p>
 
-      <h4 className="text-primary mb-4">Father Details</h4>
+      <h4 className="student-form-title text-primary mb-4">Father Details</h4>
       <form onSubmit={handleSave}>
         <div className="row mb-3">
           <div className="col-md-4">
-            <label className="form-label">
-              Name <span className="text-danger">*</span>
-            </label>
+            <label className="form-label">Name <span className="text-danger">*</span></label>
             <input type="text" className="form-control" name="fatherName" value={formData.fatherName} onChange={handleChange} />
           </div>
           <div className="col-md-4">
-            <label className="form-label">
-              Email ID <span className="text-danger">*</span>
-            </label>
+            <label className="form-label">Email ID <span className="text-danger">*</span></label>
             <input type="email" className="form-control" name="fatherEmail" value={formData.fatherEmail} onChange={handleChange} />
           </div>
           <div className="col-md-4">
-            <label className="form-label">
-              Mobile No <span className="text-danger">*</span>
-            </label>
+            <label className="form-label">Mobile No <span className="text-danger">*</span></label>
             <input type="text" className="form-control" name="fatherPhone" value={formData.fatherPhone} onChange={handleChange} />
           </div>
         </div>
 
-        <h4 className="text-primary mb-4 mt-4">Mother Details</h4>
+        <h4 className="student-form-title text-primary mb-4 mt-4">Mother Details</h4>
         <div className="row mb-3">
           <div className="col-md-4">
-            <label className="form-label">
-              Name <span className="text-danger">*</span>
-            </label>
+            <label className="form-label">Name <span className="text-danger">*</span></label>
             <input type="text" className="form-control" name="motherName" value={formData.motherName} onChange={handleChange} />
           </div>
           <div className="col-md-4">
-            <label className="form-label">
-              Email ID <span className="text-danger">*</span>
-            </label>
+            <label className="form-label">Email ID <span className="text-danger">*</span></label>
             <input type="email" className="form-control" name="motherEmail" value={formData.motherEmail} onChange={handleChange} />
           </div>
           <div className="col-md-4">
-            <label className="form-label">
-              Mobile No <span className="text-danger">*</span>
-            </label>
+            <label className="form-label">Mobile No <span className="text-danger">*</span></label>
             <input type="text" className="form-control" name="motherPhone" value={formData.motherPhone} onChange={handleChange} />
           </div>
         </div>

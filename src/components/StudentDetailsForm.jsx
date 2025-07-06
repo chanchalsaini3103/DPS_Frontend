@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Swal from "sweetalert2";
 import "bootstrap/dist/css/bootstrap.min.css";
-
+import "../styles/StudentDetailsForm.css";
 const StudentDetailsForm = ({ goToNextStep, goToPrevStep, saveStudentData }) => {
   const [age, setAge] = useState("");
   const [allowedGrades, setAllowedGrades] = useState([]);

@@ -1,34 +1,33 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Swal from "sweetalert2";
 import "bootstrap/dist/css/bootstrap.min.css";
+import "../styles/StudentDetailsForm.css"; // Shared styling
 
-const DeclarationPage = ({goToPrevStep, studentData, parentData, goToNextStep }) => {
-const [checked, setChecked] = useState(false);
-const handleProceed = () => {
-  if (!checked) {
-    Swal.fire({
-  icon: "warning",
-  title: "Declaration Required",
-  text: "Please agree to the declaration before proceeding.",
-  confirmButtonText: "OK",
-});
+const DeclarationPage = ({ goToPrevStep, studentData, parentData, goToNextStep }) => {
+  const [checked, setChecked] = useState(false);
 
-    return;
-  }
-  goToNextStep();
-};
-
+  const handleProceed = () => {
+    if (!checked) {
+      Swal.fire({
+        icon: "warning",
+        title: "Declaration Required",
+        text: "Please agree to the declaration before proceeding.",
+        confirmButtonText: "OK",
+      });
+      return;
+    }
+    goToNextStep();
+  };
 
   return (
-    <div className="container mt-4 mb-5 p-4 border rounded shadow-sm">
-      <h4 className="text-primary mb-3">Declaration Summary</h4>
+    <div className="student-form-container">
+      <h4 className="student-form-title text-primary mb-4">Declaration Summary</h4>
 
+      {/* Student Summary */}
       <div className="mb-4">
-        <h5>Student Details:</h5>
+        <h5>Student Details</h5>
         <ul className="list-group">
-          <li className="list-group-item">
-            <strong>Name:</strong> {studentData.firstName} {studentData.middleName} {studentData.lastName}
-          </li>
+          <li className="list-group-item"><strong>Name:</strong> {studentData.firstName} {studentData.middleName} {studentData.lastName}</li>
           <li className="list-group-item"><strong>DOB:</strong> {studentData.dob}</li>
           <li className="list-group-item"><strong>Age:</strong> {studentData.age}</li>
           <li className="list-group-item"><strong>Grade:</strong> {studentData.grade}</li>
@@ -36,8 +35,9 @@ const handleProceed = () => {
         </ul>
       </div>
 
+      {/* Parent Summary */}
       <div className="mb-4">
-        <h5>Parent Details:</h5>
+        <h5>Parent Details</h5>
         <ul className="list-group">
           <li className="list-group-item">
             <strong>Father:</strong> {parentData.fatherName} | {parentData.fatherEmail} | {parentData.fatherPhone}
@@ -48,18 +48,18 @@ const handleProceed = () => {
         </ul>
       </div>
 
-      <div className="form-check mt-3">
-  <input className="form-check-input" type="checkbox" id="agree" onChange={(e) => setChecked(e.target.checked)} />
-  <label className="form-check-label" htmlFor="agree">
-    I confirm the above information is correct and I agree to the declaration.
-  </label>
-</div>
+      {/* Declaration Checkbox */}
+      <div className="form-check mt-4">
+        <input className="form-check-input" type="checkbox" id="agree" onChange={(e) => setChecked(e.target.checked)} />
+        <label className="form-check-label" htmlFor="agree">
+          I confirm that the above information is true and I agree to the declaration terms.
+        </label>
+      </div>
 
-
-      <div className="text-center mt-4">
+      {/* Navigation Buttons */}
+      <div className="d-flex justify-content-center gap-3 mt-4">
         <button type="button" className="btn btn-secondary" onClick={goToPrevStep}>Previous</button>
-
-        <button className="btn btn-success btn-lg" onClick={handleProceed}>
+        <button type="button" className="btn btn-success" onClick={handleProceed}>
           Proceed to Payment
         </button>
       </div>
