@@ -2,9 +2,10 @@ import React, { useState } from "react";
 import Swal from "sweetalert2";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-const StudentDetailsForm = ({ goToNextStep,goToPrevStep, saveStudentData }) => {
+const StudentDetailsForm = ({ goToNextStep, goToPrevStep, saveStudentData }) => {
   const [age, setAge] = useState("");
   const [allowedGrades, setAllowedGrades] = useState([]);
+  const [isSaved, setIsSaved] = useState(false); // Track if form is saved
   const [formData, setFormData] = useState({
     firstName: "",
     middleName: "",
@@ -18,6 +19,7 @@ const StudentDetailsForm = ({ goToNextStep,goToPrevStep, saveStudentData }) => {
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
+    setIsSaved(false); // Reset saved state on change
   };
 
   const handleDobChange = (e) => {
@@ -36,6 +38,7 @@ const StudentDetailsForm = ({ goToNextStep,goToPrevStep, saveStudentData }) => {
       .padStart(2, "0")}-${inputDate.getFullYear()}`;
     setFormData((prev) => ({ ...prev, dob: formattedDob }));
     setAge(calculatedAge);
+    setIsSaved(false); // Reset saved state on DOB change
 
     const validGrade = calculatedAge - 5;
     if (validGrade >= 1 && validGrade <= 10) {
@@ -53,6 +56,7 @@ const StudentDetailsForm = ({ goToNextStep,goToPrevStep, saveStudentData }) => {
       return;
     }
     Swal.fire("Saved", "Student details saved successfully", "success");
+    setIsSaved(true); // Set form as saved
     saveStudentData({ ...formData, age });
   };
 
@@ -67,21 +71,54 @@ const StudentDetailsForm = ({ goToNextStep,goToPrevStep, saveStudentData }) => {
       <form onSubmit={handleSave}>
         <div className="row g-3 mb-3">
           <div className="col-md-4">
-            <label className="form-label">First Name *</label>
-            <input type="text" className="form-control" name="firstName" value={formData.firstName} onChange={handleInputChange} />
-          </div>
-          <div className="col-md-4">
-            <label className="form-label">Middle Name</label>
-            <input type="text" className="form-control" name="middleName" value={formData.middleName} onChange={handleInputChange} />
-          </div>
-          <div className="col-md-4">
-            <label className="form-label">Last Name *</label>
-            <input type="text" className="form-control" name="lastName" value={formData.lastName} onChange={handleInputChange} />
+            <label className="form-label">
+              First Name <span className="text-danger">*</span>
+            </label>
+            <input
+              type="text"
+              className="form-control"
+              name="firstName"
+              value={formData.firstName}
+              onChange={handleInputChange}
+            />
           </div>
 
           <div className="col-md-4">
-            <label className="form-label">Academic Year *</label>
-            <select className="form-select" name="academicYear" value={formData.academicYear} onChange={handleInputChange}>
+            <label className="form-label">
+              Middle Name
+            </label>
+            <input
+              type="text"
+              className="form-control"
+              name="middleName"
+              value={formData.middleName}
+              onChange={handleInputChange}
+            />
+          </div>
+
+          <div className="col-md-4">
+            <label className="form-label">
+              Last Name <span className="text-danger">*</span>
+            </label>
+            <input
+              type="text"
+              className="form-control"
+              name="lastName"
+              value={formData.lastName}
+              onChange={handleInputChange}
+            />
+          </div>
+
+          <div className="col-md-4">
+            <label className="form-label">
+              Academic Year <span className="text-danger">*</span>
+            </label>
+            <select
+              className="form-select"
+              name="academicYear"
+              value={formData.academicYear}
+              onChange={handleInputChange}
+            >
               <option value="">Select</option>
               <option value="2025-26">2025-26</option>
               <option value="2026-27">2026-27</option>
@@ -89,21 +126,40 @@ const StudentDetailsForm = ({ goToNextStep,goToPrevStep, saveStudentData }) => {
           </div>
 
           <div className="col-md-4">
-            <label className="form-label">Date of Birth *</label>
-            <input type="date" className="form-control" onChange={handleDobChange} />
+            <label className="form-label">
+              Date of Birth <span className="text-danger">*</span>
+            </label>
+            <input
+              type="date"
+              className="form-control"
+              onChange={handleDobChange}
+            />
           </div>
 
           <div className="col-md-4">
-            <label className="form-label">Age *</label>
+            <label className="form-label">
+              Age <span className="text-danger">*</span>
+            </label>
             <input type="text" className="form-control" value={age} readOnly />
           </div>
 
           <div className="col-md-4">
-            <label className="form-label">Grade *</label>
-            <select className="form-select" name="grade" value={formData.grade} onChange={handleInputChange}>
+            <label className="form-label">
+              Grade <span className="text-danger">*</span>
+            </label>
+            <select
+              className="form-select"
+              name="grade"
+              value={formData.grade}
+              onChange={handleInputChange}
+            >
               <option value="">Select</option>
               {allowedGrades.length > 0 ? (
-                allowedGrades.map((g) => <option key={g} value={`${g}th`}>{g}th</option>)
+                allowedGrades.map((g) => (
+                  <option key={g} value={`${g}th`}>
+                    {g}th
+                  </option>
+                ))
               ) : (
                 <option disabled>No eligible grade</option>
               )}
@@ -111,8 +167,15 @@ const StudentDetailsForm = ({ goToNextStep,goToPrevStep, saveStudentData }) => {
           </div>
 
           <div className="col-md-4">
-            <label className="form-label">Gender *</label>
-            <select className="form-select" name="gender" value={formData.gender} onChange={handleInputChange}>
+            <label className="form-label">
+              Gender <span className="text-danger">*</span>
+            </label>
+            <select
+              className="form-select"
+              name="gender"
+              value={formData.gender}
+              onChange={handleInputChange}
+            >
               <option value="">Select</option>
               <option>Male</option>
               <option>Female</option>
@@ -122,10 +185,35 @@ const StudentDetailsForm = ({ goToNextStep,goToPrevStep, saveStudentData }) => {
         </div>
 
         <div className="d-flex justify-content-center gap-3 mt-4">
-          <button type="button" className="btn btn-secondary" onClick={goToPrevStep}>Previous</button>
+          <button
+            type="button"
+            className="btn btn-secondary"
+            onClick={goToPrevStep}
+          >
+            Previous
+          </button>
 
-          <button type="submit" className="btn btn-outline-success">Save</button>
-          <button type="button" className="btn btn-primary" onClick={goToNextStep}>Next</button>
+          <button type="submit" className="btn btn-outline-success">
+            Save
+          </button>
+
+          <button
+            type="button"
+            className="btn btn-primary"
+            onClick={() => {
+              if (!isSaved) {
+                Swal.fire(
+                  "Unsaved Form",
+                  "Please save the form before proceeding.",
+                  "warning"
+                );
+              } else {
+                goToNextStep();
+              }
+            }}
+          >
+            Next
+          </button>
         </div>
       </form>
     </div>

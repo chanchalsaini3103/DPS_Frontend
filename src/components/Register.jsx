@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import "../styles/Register.css";
 import StudentDetailsForm from "./StudentDetailsForm";
 import ParentDetailsForm from "./ParentDetailsForm";
 import DeclarationPage from "./DeclarationPage";
 import PaymentPage from "./PaymentPage";
-import Swal from "sweetalert2"; // at top of file
+import Swal from "sweetalert2";
 import Footer from "./Footer";
 
 const Register = () => {
@@ -22,41 +22,11 @@ const Register = () => {
   const [studentData, setStudentData] = useState({});
   const [parentData, setParentData] = useState({});
 
- useEffect(() => {
-  if (step === "PAYMENT") {
-  const requestBody = {
-    ...studentData,
-    parent: parentData,
+  const handlePrev = () => {
+    const steps = ["INTRODUCTION", "STUDENT DETAILS", "PARENT INFORMATION", "DECLARATION", "PAYMENT"];
+    const currentIndex = steps.indexOf(step);
+    if (currentIndex > 0) setStep(steps[currentIndex - 1]);
   };
-
-  fetch("http://localhost:8082/register", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(requestBody),
-  })
-
-      .then((res) => {
-        if (!res.ok) throw new Error("Failed to save data");
-        return res.json();
-      })
-      .then((data) => {
-        console.log("Saved to DB:", data);
-        alert("Data saved to database successfully!");
-      })
-      .catch((err) => {
-        console.error(err);
-        alert("Something went wrong while saving data.");
-      });
-  }
-}, [step]);
-const handlePrev = () => {
-  const steps = ["INTRODUCTION", "STUDENT DETAILS", "PARENT INFORMATION", "DECLARATION", "PAYMENT"];
-  const currentIndex = steps.indexOf(step);
-  if (currentIndex > 0) {
-    setStep(steps[currentIndex - 1]);
-  }
-};
-
 
   const validateInputs = () => {
     const phoneRegex = /^[0-9]{10}$/;
@@ -76,50 +46,40 @@ const handlePrev = () => {
   };
 
   const handleNext = () => {
-  if (step === "INTRODUCTION") {
-    if (!showOtp) {
-      if (!validateInputs()) return;
-      const newOtp = Math.floor(100000 + Math.random() * 900000).toString();
-      setGeneratedOtp(newOtp);
-      
-      // Show SweetAlert with OTP
-      Swal.fire({
-        title: "OTP Sent!",
-        text: `Your OTP is: ${newOtp}`,
-        icon: "info",
-        confirmButtonColor: "#3085d6",
-        confirmButtonText: "OK",
-      });
+    if (step === "INTRODUCTION") {
+      if (!showOtp) {
+        if (!validateInputs()) return;
+        const newOtp = Math.floor(100000 + Math.random() * 900000).toString();
+        setGeneratedOtp(newOtp);
 
-      setShowOtp(true);
-      setTimer(45);
-      setResendCount(0);
-    } else {
-      if (!otpVerified) {
-        Swal.fire("Error", "Please verify the OTP before proceeding.", "error");
+        Swal.fire({
+          title: "OTP Sent!",
+          text: `Your OTP is: ${newOtp}`,
+          icon: "info",
+          confirmButtonText: "OK",
+        });
+
+        setShowOtp(true);
+        setTimer(45);
+        setResendCount(0);
       } else {
-        setStep("STUDENT DETAILS");
+        if (!otpVerified) {
+          Swal.fire("Error", "Please verify the OTP before proceeding.", "error");
+        } else {
+          setStep("STUDENT DETAILS");
+        }
       }
     }
-  }
-};
-
+  };
 
   const handleVerifyOtp = () => {
-  if (otp === generatedOtp) {
-    setOtpVerified(true);
-    Swal.fire({
-      icon: "success",
-      title: "OTP Verified!",
-      text: "You can now proceed to the next step.",
-      timer: 2000,
-      showConfirmButton: false,
-    });
-  } else {
-    Swal.fire("Invalid OTP", "Please enter the correct OTP.", "error");
-  }
-};
-
+    if (otp === generatedOtp) {
+      setOtpVerified(true);
+      Swal.fire("OTP Verified!", "You can now proceed to the next step.", "success");
+    } else {
+      Swal.fire("Invalid OTP", "Please enter the correct OTP.", "error");
+    }
+  };
 
   const handleResendOtp = () => {
     if (resendCount >= 3) {
@@ -135,14 +95,15 @@ const handlePrev = () => {
 
   return (
     <div className="register-page">
+      {/* HEADER + Progress */}
       <div className="register-header">
         <img src="/dps-logo.png" alt="DPS Logo" className="register-logo" />
         <div className="register-school-info">
           <h2>DELHI PUBLIC SCHOOL</h2>
           <p>
-            Nyati Estate Rd, Nyati County, Mohammed Wadi, Pune, Autadwadi Handewadi,<br />
-Maharashtra 411060 <br />
-            E-mail: <a href="mailto:dps@example.com">dps@example.com</a><br />
+            Nyati Estate Rd, Mohammed Wadi, Pune<br />
+            Maharashtra 411060<br />
+            Email: dps@example.com<br />
             Phone: 020 26522100 / +91 7821820239
           </p>
         </div>
@@ -156,28 +117,29 @@ Maharashtra 411060 <br />
         ))}
       </div>
 
+      {/* STEPWISE COMPONENTS */}
       {step === "INTRODUCTION" && (
         <div className="register-form-box">
           <h3 className="form-title">INTRODUCTION</h3>
-          <p className="form-note">Dear Parents</p>
-          <p className="form-note">Thank you for your interest in Delhi Public School.</p>
+          <p>Dear Parents,</p>
+  <p>Thank you for your interest in Delhi Public School.</p>
+  <p>The Application Form is for parents interested in being part of the Delhi Public School.</p>
 
-          <ol className="form-instructions">
-            <li>The Application Form is for parents interested in being part of the Symbiosis International School.</li>
-            <li>The submission of the Application Form does not imply an admission of your child to the school.</li>
-            <li>The Application Form should be complete in all respects, and the information provided should be true.</li>
-            <li>After submission, parents will receive an acknowledgement. If not received, check spam or email <strong>admissionsinfo@sis.ac.in</strong></li>
-            <li>One Application Form per child is required.</li>
-            <li>The Application Form is divided into 3 sections.</li>
-            <li>It can be saved and accessed later via email link.</li>
-            <li>Admission is based on records, achievements & grade level.</li>
-            <li>Each form is valid for 1 year from submission date.</li>
-            <li>Incomplete forms will not be accepted.</li>
-            <li>Use N/A for questions that don't apply.</li>
-          </ol>
+  <ol>
+    <li>The submission of the Application Form does <strong>not</strong> imply an admission of your child to the school.</li>
+    <li>The Application Form should be complete in all respects, and the information provided should be true.</li>
+    <li>After submission, parents will receive an acknowledgement. If not received, check spam or email <a href="mailto:admissionsinfo@sis.ac.in">admissionsinfo@sis.ac.in</a>.</li>
+    <li>One Application Form per child is required.</li>
+    <li>The Application Form is divided into  sections.</li>
+    <li>It can be saved and accessed later via email link.</li>
+    <li>Admission is based on records, achievements, and grade level.</li>
+    <li>Each form is valid for 1 year from submission date.</li>
+    <li>Incomplete forms will not be accepted.</li>
+    <li>Use <strong>N/A</strong> for questions that do not apply.</li>
+  </ol>
 
           <div className="radio-group">
-            <p>Please provide your Email ID and Mobile Number</p>
+            <p>Select Parent Type</p>
             <label><input type="radio" name="parentType" onChange={() => setParentType("Father")} /> Father</label>
             <label><input type="radio" name="parentType" onChange={() => setParentType("Mother")} /> Mother</label>
           </div>
@@ -186,86 +148,51 @@ Maharashtra 411060 <br />
             <input type="email" placeholder="Email ID" value={email} onChange={(e) => setEmail(e.target.value)} />
             <input type="text" placeholder="Mobile Number" value={phone} onChange={(e) => setPhone(e.target.value)} />
           </div>
-{showOtp && (
-  <div className="row g-2 align-items-center mt-3">
-    <div className="col-md-6">
-      <input
-        type="text"
-        className="form-control"
-        placeholder="Enter OTP"
-        value={otp}
-        onChange={(e) => setOtp(e.target.value)}
-      />
-    </div>
-    <div className="col-md-3">
-      <button className="btn btn-outline-primary w-100" onClick={handleVerifyOtp}>
-        Verify OTP
-      </button>
-    </div>
-    <div className="col-md-3 text-muted small">
-      {timer > 0 ? (
-        <span className="text-secondary">Resend in {timer}s</span>
-      ) : resendCount < 3 ? (
-        <span
-          className="text-primary"
-          role="button"
-          style={{ cursor: "pointer" }}
-          onClick={handleResendOtp}
-        >
-          Resend OTP
-        </span>
-      ) : (
-        <span className="text-danger">Resend limit reached</span>
-      )}
-    </div>
-  </div>
-)}
 
+          {showOtp && (
+            <div className="row g-2 mt-3">
+              <div className="col-md-6">
+                <input type="text" className="form-control" placeholder="Enter OTP" value={otp} onChange={(e) => setOtp(e.target.value)} />
+              </div>
+              <div className="col-md-3">
+                <button className="btn btn-outline-primary w-100" onClick={handleVerifyOtp}>Verify OTP</button>
+              </div>
+              <div className="col-md-3 small text-muted">
+                {timer > 0 ? (
+                  <span>Resend in {timer}s</span>
+                ) : resendCount < 3 ? (
+                  <span className="text-primary" role="button" onClick={handleResendOtp} style={{ cursor: "pointer" }}>
+                    Resend OTP
+                  </span>
+                ) : (
+                  <span className="text-danger">Resend limit reached</span>
+                )}
+              </div>
+            </div>
+          )}
 
-          <div className="form-actions">
+          <div className="form-actions mt-3">
             <button className="next-btn" onClick={handleNext}>Next</button>
           </div>
         </div>
       )}
 
       {step === "STUDENT DETAILS" && (
-        <StudentDetailsForm
-  goToNextStep={() => setStep("PARENT INFORMATION")}
-  goToPrevStep={handlePrev}
-  saveStudentData={(data) => setStudentData(data)}
-/>
-
+        <StudentDetailsForm goToNextStep={() => setStep("PARENT INFORMATION")} goToPrevStep={handlePrev} saveStudentData={setStudentData} />
       )}
 
       {step === "PARENT INFORMATION" && (
-        <ParentDetailsForm
-          selectedParentType={parentType}
-          parentEmail={email}
-          parentPhone={phone}
-          goToPrevStep={() => setStep("STUDENT DETAILS")}
-          goToNextStep={() => setStep("DECLARATION")}
-          saveParentData={(data) => setParentData(data)}
-        />
+        <ParentDetailsForm selectedParentType={parentType} parentEmail={email} parentPhone={phone} goToNextStep={() => setStep("DECLARATION")} goToPrevStep={() => setStep("STUDENT DETAILS")} saveParentData={setParentData} />
       )}
 
       {step === "DECLARATION" && (
-        <DeclarationPage
-          studentData={studentData}
-          parentData={parentData}
-           goToPrevStep={() => setStep("PARENT INFORMATION")}
-          goToNextStep={() => setStep("PAYMENT")}
-        />
+        <DeclarationPage studentData={studentData} parentData={parentData} goToNextStep={() => setStep("PAYMENT")} goToPrevStep={() => setStep("PARENT INFORMATION")} />
       )}
 
       {step === "PAYMENT" && (
-        <PaymentPage
-        
-        studentData={studentData}
-  parentData={parentData}
-  goToPrevStep={() => setStep("DECLARATION")}
-        />
-        
+        <PaymentPage studentData={studentData} parentData={parentData} goToPrevStep={() => setStep("DECLARATION")} />
       )}
+
       <Footer />
     </div>
   );

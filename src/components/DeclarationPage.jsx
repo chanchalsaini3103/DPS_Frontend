@@ -1,12 +1,18 @@
 import React, { useState, useEffect } from "react";
-
+import Swal from "sweetalert2";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 const DeclarationPage = ({goToPrevStep, studentData, parentData, goToNextStep }) => {
 const [checked, setChecked] = useState(false);
 const handleProceed = () => {
   if (!checked) {
-    alert("Please agree to the declaration before proceeding.");
+    Swal.fire({
+  icon: "warning",
+  title: "Declaration Required",
+  text: "Please agree to the declaration before proceeding.",
+  confirmButtonText: "OK",
+});
+
     return;
   }
   goToNextStep();
