@@ -22,13 +22,14 @@ const PaymentPage = ({ studentData, parentData, goToPrevStep }) => {
 
         console.log("Sending to backend:", requestBody);
 
-        fetch("http://localhost:8081/api/register", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(requestBody),
-        })
+        fetch(`${import.meta.env.VITE_API_BASE_URL}/api/register`, {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json",
+  },
+  body: JSON.stringify(requestBody),
+})
+
           .then(async (res) => {
             const data = await res.json();
             if (res.ok) {
