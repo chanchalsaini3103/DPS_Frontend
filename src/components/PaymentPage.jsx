@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 
 const PaymentPage = ({ studentData, parentData, goToPrevStep }) => {
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
 
   const handlePayment = () => {
     Swal.fire({
@@ -14,6 +15,8 @@ const PaymentPage = ({ studentData, parentData, goToPrevStep }) => {
       confirmButtonText: "Yes, Proceed",
     }).then((result) => {
       if (result.isConfirmed) {
+        setLoading(true);
+
         const requestBody = {
           ...studentData,
           paymentCompleted: true,
@@ -23,15 +26,15 @@ const PaymentPage = ({ studentData, parentData, goToPrevStep }) => {
         console.log("Sending to backend:", requestBody);
 
         fetch(`${import.meta.env.VITE_API_BASE_URL}/api/register`, {
-  method: "POST",
-  headers: {
-    "Content-Type": "application/json",
-  },
-  body: JSON.stringify(requestBody),
-})
-
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(requestBody),
+        })
           .then(async (res) => {
             const data = await res.json();
+
             if (res.ok) {
               Swal.fire({
                 title: "✅ Success",
@@ -40,11 +43,21 @@ const PaymentPage = ({ studentData, parentData, goToPrevStep }) => {
                 timer: 1500,
                 showConfirmButton: false,
               });
+localStorage.removeItem("parentId");
+  localStorage.removeItem("parentName");
+  localStorage.removeItem("loggedInAs");
+localStorage.clear();
 
               // Redirect to login after 3 seconds
               setTimeout(() => {
                 navigate("/dps-login");
               }, 3000);
+            } else if (res.status === 409) {
+              Swal.fire({
+                title: "Duplicate Entry",
+                text: data.error || "This parent or student already exists.",
+                icon: "warning",
+              });
             } else {
               Swal.fire("❌ Failed", data.error || "Something went wrong", "error");
             }
@@ -52,7 +65,8 @@ const PaymentPage = ({ studentData, parentData, goToPrevStep }) => {
           .catch((err) => {
             console.error("❌ Registration failed:", err);
             Swal.fire("❌ Error", "Registration failed", "error");
-          });
+          })
+          .finally(() => setLoading(false));
       }
     });
   };
@@ -73,11 +87,11 @@ const PaymentPage = ({ studentData, parentData, goToPrevStep }) => {
           </li>
         </ul>
         <div className="text-center">
-          <button className="btn btn-secondary me-3" onClick={goToPrevStep}>
+          <button className="btn btn-secondary me-3" onClick={goToPrevStep} disabled={loading}>
             Previous
           </button>
-          <button className="btn btn-primary btn-lg" onClick={handlePayment}>
-            Proceed to Payment
+          <button className="btn btn-primary btn-lg" onClick={handlePayment} disabled={loading}>
+            {loading ? "Processing..." : "Proceed to Payment"}
           </button>
         </div>
       </div>
