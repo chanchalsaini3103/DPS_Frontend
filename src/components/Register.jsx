@@ -6,7 +6,7 @@ import DeclarationPage from "./DeclarationPage";
 import PaymentPage from "./PaymentPage";
 import Swal from "sweetalert2";
 import Footer from "./Footer";
-
+import { Link } from "react-router-dom"; // make sure this is imported
 const Register = () => {
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
@@ -107,6 +107,7 @@ const Register = () => {
             Phone: 020 26522100 / +91 7821820239
           </p>
         </div>
+        <Link to="/" className="back-to-home">← Back to Home</Link>
       </div>
 
       <div className="register-progress-container">

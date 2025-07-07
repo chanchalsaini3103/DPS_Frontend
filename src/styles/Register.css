@@ -135,3 +135,106 @@
 .next-btn:hover {
   background-color: #2b3a83;
 }
+
+.back-to-home {
+  position: absolute;
+  top: 15px;
+  right: 20px;
+  font-size: 14px;
+  color: #2b3a83;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.back-to-home:hover {
+  text-decoration: underline;
+}
+@media (max-width: 768px) {
+  .register-header {
+    flex-direction: column;
+    text-align: center;
+    gap: 10px;
+    padding: 20px 10px;
+    position: relative;
+  }
+
+  .register-logo {
+    height: 80px;
+  }
+
+  .register-school-info h2 {
+    font-size: 18px;
+  }
+
+  .register-school-info p {
+    font-size: 13px;
+    line-height: 1.4;
+  }
+
+  .back-to-home {
+    position: relative;
+    top: auto;
+    right: auto;
+    align-self: flex-start;
+    margin-top: 10px;
+    font-size: 13px;
+  }
+
+  .register-progress-container {
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    padding: 20px 10px;
+  }
+
+  .register-step {
+    font-size: 13px;
+  }
+
+  .register-form-box {
+    padding: 20px 15px;
+    margin: 20px 10px;
+  }
+
+  .form-title {
+    font-size: 18px;
+  }
+
+  .form-instructions,
+  .form-note {
+    font-size: 13px;
+  }
+
+  .radio-group {
+    font-size: 13px;
+  }
+
+  .form-inputs {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .form-inputs input {
+    width: 100%;
+  }
+
+  .next-btn {
+    width: 100%;
+    padding: 10px;
+    font-size: 14px;
+  }
+
+  .row.g-2.mt-3 {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .row.g-2.mt-3 .col-md-6,
+  .row.g-2.mt-3 .col-md-3 {
+    width: 100%;
+  }
+
+  .btn-outline-primary.w-100 {
+    width: 100%;
+  }
+}

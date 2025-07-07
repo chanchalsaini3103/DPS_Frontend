@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+
 import "../styles/Navbar.css";
 import { Navbar, Nav, NavDropdown, Container } from "react-bootstrap";
 import { FaRegFileAlt, FaUser } from "react-icons/fa";
@@ -25,18 +27,23 @@ import EnquiryForm from "./EnquiryForm";
 
 const AppNavbar = () => {
   const [showForm, setShowForm] = useState(false);
+  const navigate = useNavigate();
+ const handleApplyClick = () => {
+    navigate('/register');
+  };
+  
   return (
     <div className="dps-wrapper">
       <div className="dps-nav-row">
         <div className="dps-logo-container">
           <Link to="/">
-  <img
-    src="/dps-logo.png"
-    alt="Delhi Public School"
-    className="dps-logo"
-    style={{ cursor: "pointer" }}
-  />
-</Link>
+            <img
+              src="/dps-logo.png"
+              alt="Delhi Public School"
+              className="dps-logo"
+              style={{ cursor: "pointer" }}
+            />
+          </Link>
           <div className="dps-logo-text">
             <div>Delhi</div>
             <div>Public</div>
@@ -46,28 +53,35 @@ const AppNavbar = () => {
 
         <div className="dps-right-content">
           <div className="dps-top-buttons">
-             <button className="dps-btn inquiry" onClick={() => setShowForm(!showForm)}>
-        <FaRegFileAlt style={{ marginRight: "5px" }} />
-        INQUIRY FORM
-      </button>
-{showForm && (
-  <div className="enquiry-modal-overlay">
-    <div className="enquiry-modal-content">
-      <button className="close-btn" onClick={() => setShowForm(false)}>✕</button>
-      <EnquiryForm />
-    </div>
-  </div>
-)}
+            <button
+              className="dps-btn inquiry"
+              onClick={() => setShowForm(!showForm)}
+            >
+              <FaRegFileAlt style={{ marginRight: "5px" }} />
+              INQUIRY FORM
+            </button>
+            {showForm && (
+              <div className="enquiry-modal-overlay">
+                <div className="enquiry-modal-content">
+                  <button
+                    className="close-btn"
+                    onClick={() => setShowForm(false)}
+                  >
+                    ✕
+                  </button>
+                  <EnquiryForm />
+                </div>
+              </div>
+            )}
 
             <Link
-  to="/dps-login"
-  className="dps-btn login"
-  style={{ textDecoration: "none", color: "white" }}
->
-  <FaUser style={{ marginRight: "5px" }} />
-  PARENT LOGIN
-</Link>
-
+              to="/dps-login"
+              className="dps-btn login"
+              style={{ textDecoration: "none", color: "white" }}
+            >
+              <FaUser style={{ marginRight: "5px" }} />
+              PARENT LOGIN
+            </Link>
           </div>
 
           <Navbar expand="lg" className="dps-navbar">
@@ -104,8 +118,7 @@ const AppNavbar = () => {
       </div>
       <div className="marquee-bar">
         <div className="marquee-text">
-          Admissions open for Classes I & X for the academic
-          session 2025–26.
+          Admissions open for Classes I & X for the academic session 2025–26.
         </div>
       </div>
       <div className="hero-image-container">
@@ -198,8 +211,6 @@ const AppNavbar = () => {
               to foster physical fitness, discipline, and team spirit.
             </p>
           </div>
-
-        
         </div>
       </section>
       <CounterSection />
@@ -216,7 +227,9 @@ const AppNavbar = () => {
               school.
             </p>
           </div>
-          <button className="apply-button">Apply Now →</button>
+          <button className="apply-button" onClick={handleApplyClick}>
+            Apply Now →
+          </button>
         </section>
 
         {/* Footer Section */}
@@ -230,8 +243,7 @@ const AppNavbar = () => {
               <p>
                 Nyati Estate Rd, Nyati County, Mohammed Wadi
                 <br />
-                 Autadwadi Handewadi,
-Maharashtra 411060
+                Autadwadi Handewadi, Maharashtra 411060
               </p>
               <p>📞 +91 020 26522100</p>
               <p>✉️ dps@example.com</p>

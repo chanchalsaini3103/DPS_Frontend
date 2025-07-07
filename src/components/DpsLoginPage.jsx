@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import "../styles/DpsLoginPage.css";
-import { FaFacebookF, FaInstagram, FaYoutube } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
+import Footer from "./Footer";
 
 const DPSLoginPage = () => {
   const navigate = useNavigate();
@@ -92,7 +92,6 @@ const DPSLoginPage = () => {
   const handleVerifyOtp = async () => {
     if (otp === generatedOtp) {
       setOtpVerified(true);
-
       try {
         const res = await fetch(
           `${import.meta.env.VITE_API_BASE_URL}/api/parent/find-by-email-phone?email=${email}&phone=${phone}`
@@ -123,7 +122,7 @@ const DPSLoginPage = () => {
   };
 
   return (
-    <>
+    <> <div className="dps-login-page-wrapper">
       <div className="dps-top-navbar">
         <div className="navbar-left">
           <Link to="/" className="back-link">← Back to Home</Link>
@@ -136,20 +135,7 @@ const DPSLoginPage = () => {
 
       <div className="dps-login-container">
         <div className="dps-left-banner">
-          <img src="/dps.jpg" alt="School Kids" className="banner-img" />
-          <div className="banner-text">
-            <p>Empowering students to thrive and lead with purpose</p>
-            <p>Our holistic approach fosters academic excellence, values, and life skills.</p>
-            <p><strong>Principal, DPS School</strong></p>
-            <div className="social">
-              <p>Follow us: @dpsindia</p>
-              <div className="icons">
-                <FaFacebookF />
-                <FaInstagram />
-                <FaYoutube />
-              </div>
-            </div>
-          </div>
+          <img src="/dpsslogin.png" alt="School Kids" className="banner-img" />
         </div>
 
         <div className="dps-right-login">
@@ -184,11 +170,13 @@ const DPSLoginPage = () => {
             )}
 
             <div className="login-links">
-              <Link to="/register" className="register-link">Register</Link>
+              <Link to="/register" className="login-btn text-center w-100">Register</Link>
             </div>
           </form>
         </div>
       </div>
+      </div>
+      <Footer />
     </>
   );
 };

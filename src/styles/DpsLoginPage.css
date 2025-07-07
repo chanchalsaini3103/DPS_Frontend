@@ -1,23 +1,82 @@
-.dps-login-container {
-  display: flex;
-  height: 100vh;
-  font-family: 'Segoe UI', sans-serif;
-  border: none;
+/* Reset & base setup */
+* {
   margin: 0;
-  padding: 10px;
-
+  padding: 0;
+  box-sizing: border-box;
 }
 
+html, body {
+  height: 100%;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+/* Page wrapper holds everything except footer */
+.dps-login-page-wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* Navbar */
+.dps-top-navbar {
+  background-color: #2b3a83;
+  color: #fff;
+  padding: 10px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 50px;
+  flex-shrink: 0;
+}
+
+.navbar-left .back-link {
+  color: #fff;
+  font-size: 14px;
+  text-decoration: none;
+  font-weight: 500;
+}
+.navbar-left .back-link:hover {
+  text-decoration: underline;
+}
+
+.navbar-center {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.nav-logo {
+  height: 30px;
+}
+.school-name {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+/* Main container */
+.dps-login-container {
+  flex: 1;
+  display: flex;
+  padding: 10px;
+}
+
+/* Left image/banner section */
 .dps-left-banner {
   flex: 6;
   background: white;
   padding: 10px;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  border: none;
+  justify-content: center;
 }
 
+.banner-img {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+}
+
+/* Right form section */
 .dps-right-login {
   flex: 4;
   background: white;
@@ -26,49 +85,11 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
- 
-  border: none;
 }
 
 .dps-logo {
   width: 120px;
   margin-bottom: 20px;
-}
-
-.social {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.social .icons svg {
-  font-size: 18px;
-  margin-left: 10px;
-  color: #2b3a83;
-  cursor: pointer;
-}
-
-.banner-img {
-  width: 100%;
-  height: auto;
-  border-radius: 8px;
-  margin: 20px 0;
-}
-
-.banner-text {
-  margin-top: 10px;
-}
-
-.banner-text h2 {
-  color: #2b3a83;
-  font-weight: bold;
-  font-size: 24px;
-}
-
-.banner-text p {
-  color: #333;
-  margin: 6px 0;
-  font-size: 15px;
 }
 
 .subtext {
@@ -77,6 +98,7 @@
   margin-bottom: 20px;
 }
 
+/* Login form */
 .login-form {
   width: 100%;
   max-width: 320px;
@@ -92,17 +114,6 @@
   font-size: 16px;
 }
 
-.forgot-link {
-  text-align: right;
-  margin-bottom: 20px;
-}
-
-.forgot-link a {
-  color: red;
-  text-decoration: none;
-  font-size: 14px;
-}
-
 .login-btn {
   background-color: #c62828;
   color: #fff;
@@ -112,65 +123,100 @@
   font-size: 16px;
   cursor: pointer;
   transition: background 0.3s;
+  margin-top: 10px;
 }
 
 .login-btn:hover {
   background-color: #b71c1c;
 }
-.dps-top-navbar {
-  width: 100%;
-  padding: 10px 20px;
-  
-  background-color: #2b3a83;
-  color: #fff;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
 
-.navbar-left .back-link {
-  color: #fff;
+/* Footer control */
+footer {
+  flex-shrink: 0;
+  background: #f2f2f2;
+  padding: 15px;
+  text-align: center;
   font-size: 14px;
-  text-decoration: none;
-  font-weight: 500;
+  color: #555;
 }
 
-.navbar-left .back-link:hover {
-  text-decoration: underline;
-}
-
-.navbar-center {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.nav-logo {
-  height: 30px;
-}
-
-.school-name {
-  font-size: 16px;
-  font-weight: bold;
-}
+/* Login links (e.g., register) */
 .login-links {
+  margin-top: 15px;
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 10px;
+  justify-content: center;
 }
 
-.forgot-link, .register-link {
-  color: #d32f2f;
+.login-links .login-btn {
+  width: 100%;
+  text-align: center;
   text-decoration: none;
-  font-size: 14px;
 }
+@media (max-width: 768px) {
+  .dps-login-container {
+    flex-direction: column;
+    padding: 20px 10px;
+  }
 
-.register-link:hover,
-.forgot-link:hover {
-  text-decoration: underline;
-}
-body {
-  margin: 0;
-  padding: 0;
+  .dps-left-banner,
+  .dps-right-login {
+    flex: 1;
+    width: 100%;
+    padding: 10px;
+  }
+
+  .dps-left-banner {
+    order: 2;
+    padding-top: 20px;
+  }
+
+  .dps-right-login {
+    order: 1;
+    align-items: center;
+  }
+
+  .dps-logo {
+    width: 90px;
+    margin-bottom: 10px;
+  }
+
+  .login-form {
+    max-width: 100%;
+    width: 100%;
+    padding: 0 10px;
+  }
+
+  .login-form input {
+    font-size: 14px;
+    padding: 10px;
+  }
+
+  .login-btn {
+    font-size: 14px;
+    padding: 10px;
+  }
+
+  .otp-controls {
+    text-align: center;
+  }
+
+  .navbar-center .school-name {
+    font-size: 14px;
+  }
+
+  .nav-logo {
+    height: 24px;
+  }
+
+  .dps-top-navbar {
+    flex-direction: column;
+    height: auto;
+    padding: 10px;
+    text-align: center;
+    gap: 6px;
+  }
+
+  .navbar-left .back-link {
+    font-size: 13px;
+  }
 }
