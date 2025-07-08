@@ -129,7 +129,8 @@ const DPSLoginPage = () => {
         </div>
         <div className="navbar-center">
           <img src="/dps-logo.png" alt="DPS Logo" className="nav-logo" />
-          <span className="school-name">Delhi Public School</span>
+          <span className="school-name" style={{ color: "white" }}>Delhi Public School</span>
+
         </div>
       </div>
 

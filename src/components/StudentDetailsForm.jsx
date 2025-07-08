@@ -121,7 +121,7 @@ const StudentDetailsForm = ({ goToNextStep, goToPrevStep, saveStudentData }) => 
             >
               <option value="">Select</option>
               <option value="2025-26">2025-26</option>
-              <option value="2026-27">2026-27</option>
+              
             </select>
           </div>
 
