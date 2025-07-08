@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Swal from "sweetalert2";
 import { Link, useNavigate } from "react-router-dom";
 import "../styles/nav.css";
+
 const ParentDashboard = () => {
   const navigate = useNavigate();
   const [parent, setParent] = useState(null);
@@ -136,139 +137,153 @@ const ParentDashboard = () => {
   };
 
   return (
-
-    <>
-    
-   <div className="dps-top-navbar d-flex justify-content-between align-items-center px-4 py-2 bg-light shadow">
-  {/* Left: Logo + School Name */}
-  <div className="d-flex align-items-center">
-    <img src="/dps-logo.png" alt="DPS Logo" className="nav-logo me-2" style={{ height: "40px" }} />
-    <span className="school-name fs-5 fw-bold">Delhi Public School</span>
-  </div>
-
-  {/* Right: Logout Button */}
-  <button className="btn btn-danger" onClick={handleLogout}>
-    Logout
-  </button>
-</div>
-
-    
-    <div className="container mt-4">
-       
-
-      <div className="d-flex justify-content-between align-items-center mb-3">
-        <h2 className="text-center w-100">Parent & Student Dashboard</h2>
-
-      </div>
-
-      {parent && (
-        <div className="card mb-4 shadow">
-          <div className="card-header bg-success text-white">
-            <h5>{parent.fatherName} & {parent.motherName}</h5>
-            <small>Email: {parent.fatherEmail || parent.motherEmail} | Phone: {parent.fatherPhone}</small>
-          </div>
-          <div className="card-body">
-            <h6>Children:</h6>
-            <table className="table table-bordered">
-              <thead>
-                <tr>
-                  <th>Name</th>
-                  <th>DOB</th>
-                  <th>Grade</th>
-                  <th>Gender</th>
-                  <th>Payment</th>
-                </tr>
-              </thead>
-              <tbody>
-                {parent.students.map((student, i) => (
-                  <tr key={i}>
-                    <td>{student.firstName} {student.lastName}</td>
-                    <td>{student.dob}</td>
-                    <td>{student.grade}</td>
-                    <td>{student.gender}</td>
-                    <td>{student.paymentCompleted ? "✅ Paid" : "❌ Pending"}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-            <button className="btn btn-primary mt-2" onClick={handleAddChildClick}>
-              ➕ Add Another Child
-            </button>
-          </div>
+    <div className="container-fluid">
+      <div className="row">
+        {/* Sidebar - Reduced Width */}
+        <div className="col-md-2 bg-dark text-white min-vh-100 sidebar p-3">
+          <h4 className="text-white mb-4">👨‍👩‍👧 Parent Portal</h4>
+          <ul className="nav flex-column">
+            <li className="nav-item mb-2">
+              <button className="btn btn-outline-light w-100 text-start">🏠 Dashboard</button>
+            </li>
+            <li className="nav-item mb-2">
+              <button className="btn btn-outline-light w-100 text-start">📋 My Children</button>
+            </li>
+            <li className="nav-item mb-2">
+              <button className="btn btn-outline-light w-100 text-start" onClick={handleAddChildClick}>➕ Add Child</button>
+            </li>
+            <li className="nav-item mb-2">
+              <button className="btn btn-outline-light w-100 text-start">👤 Profile</button>
+            </li>
+            <li className="nav-item mb-2">
+              <button className="btn btn-outline-light w-100 text-start">📄 Application Status</button>
+            </li>
+            <li className="nav-item mb-2">
+              <button className="btn btn-outline-light w-100 text-start">💳 Payment History</button>
+            </li>
+            <li className="nav-item mb-2">
+              <button className="btn btn-outline-light w-100 text-start">📢 Notices / Announcements</button>
+            </li>
+            <li className="nav-item mb-2">
+              <button className="btn btn-outline-light w-100 text-start">📞 Help / Support</button>
+            </li>
+            <li className="nav-item mt-4">
+              <button className="btn btn-danger w-100 text-start" onClick={handleLogout}>🚪 Logout</button>
+            </li>
+          </ul>
         </div>
-      )}
 
-      {showForm && (
-        <div className="modal show d-block" tabIndex="-1">
-          <div className="modal-dialog modal-lg mt-5">
+        {/* Main Content */}
+        <div className="col-md-10 p-4">
+          <h2 className="text-center mb-4">Parent & Student Dashboard</h2>
 
-            <div className="modal-content">
-              <div className="modal-header">
-                <h5 className="modal-title">Add New Child</h5>
-                <button type="button" className="btn-close" onClick={() => setShowForm(false)}></button>
+          {parent && (
+            <div className="card mb-4 shadow">
+              <div className="card-header bg-success text-white">
+                <h5>{parent.fatherName} & {parent.motherName}</h5>
+                <small>Email: {parent.fatherEmail || parent.motherEmail} | Phone: {parent.fatherPhone}</small>
               </div>
-              <div className="modal-body">
-                <div className="row g-3">
-                  <div className="col-md-4">
-                    <label className="form-label">First Name *</label>
-                    <input type="text" name="firstName" className="form-control" value={formData.firstName} onChange={handleChange} />
+              <div className="card-body">
+                <h6>Children:</h6>
+                <table className="table table-bordered">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>DOB</th>
+                      <th>Grade</th>
+                      <th>Gender</th>
+                      <th>Payment</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {parent.students.map((student, i) => (
+                      <tr key={i}>
+                        <td>{student.firstName} {student.lastName}</td>
+                        <td>{student.dob}</td>
+                        <td>{student.grade}</td>
+                        <td>{student.gender}</td>
+                        <td>{student.paymentCompleted ? "✅ Paid" : "❌ Pending"}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+                <button className="btn btn-primary mt-2" onClick={handleAddChildClick}>
+                  ➕ Add Another Child
+                </button>
+              </div>
+            </div>
+          )}
+
+          {showForm && (
+            <div className="modal show d-block" tabIndex="-1">
+              <div className="modal-dialog modal-lg mt-5">
+                <div className="modal-content">
+                  <div className="modal-header">
+                    <h5 className="modal-title">Add New Child</h5>
+                    <button type="button" className="btn-close" onClick={() => setShowForm(false)}></button>
                   </div>
-                  <div className="col-md-4">
-                    <label className="form-label">Middle Name</label>
-                    <input type="text" name="middleName" className="form-control" value={formData.middleName} onChange={handleChange} />
+                  <div className="modal-body">
+                    <div className="row g-3">
+                      <div className="col-md-4">
+                        <label className="form-label">First Name *</label>
+                        <input type="text" name="firstName" className="form-control" value={formData.firstName} onChange={handleChange} />
+                      </div>
+                      <div className="col-md-4">
+                        <label className="form-label">Middle Name</label>
+                        <input type="text" name="middleName" className="form-control" value={formData.middleName} onChange={handleChange} />
+                      </div>
+                      <div className="col-md-4">
+                        <label className="form-label">Last Name *</label>
+                        <input type="text" name="lastName" className="form-control" value={formData.lastName} onChange={handleChange} />
+                      </div>
+                      <div className="col-md-4">
+                        <label className="form-label">Academic Year *</label>
+                        <select className="form-select" name="academicYear" value={formData.academicYear} onChange={handleChange}>
+                          <option value="">Select</option>
+                          <option value="2025-26">2025-26</option>
+                        </select>
+                      </div>
+                      <div className="col-md-4">
+                        <label className="form-label">DOB *</label>
+                        <input type="date" className="form-control" onChange={handleDobChange} />
+                      </div>
+                      <div className="col-md-4">
+                        <label className="form-label">Age</label>
+                        <input type="text" className="form-control" value={age} readOnly />
+                      </div>
+                      <div className="col-md-4">
+                        <label className="form-label">Grade *</label>
+                        <select className="form-select" name="grade" value={formData.grade} onChange={handleChange}>
+                          <option value="">Select</option>
+                          {allowedGrades.length > 0 ? (
+                            allowedGrades.map((g) => <option key={g} value={`${g}th`}>{g}th</option>)
+                          ) : (
+                            <option disabled>No eligible grade</option>
+                          )}
+                        </select>
+                      </div>
+                      <div className="col-md-4">
+                        <label className="form-label">Gender *</label>
+                        <select className="form-select" name="gender" value={formData.gender} onChange={handleChange}>
+                          <option value="">Select</option>
+                          <option>Male</option>
+                          <option>Female</option>
+                          <option>Other</option>
+                        </select>
+                      </div>
+                    </div>
                   </div>
-                  <div className="col-md-4">
-                    <label className="form-label">Last Name *</label>
-                    <input type="text" name="lastName" className="form-control" value={formData.lastName} onChange={handleChange} />
-                  </div>
-                  <div className="col-md-4">
-                    <label className="form-label">Academic Year *</label>
-                    <select className="form-select" name="academicYear" value={formData.academicYear} onChange={handleChange}>
-                      <option value="">Select</option>
-                      <option value="2025-26">2025-26</option>
-                      
-                    </select>
-                  </div>
-                  <div className="col-md-4">
-                    <label className="form-label">DOB *</label>
-                    <input type="date" className="form-control" onChange={handleDobChange} />
-                  </div>
-                  <div className="col-md-4">
-                    <label className="form-label">Age</label>
-                    <input type="text" className="form-control" value={age} readOnly />
-                  </div>
-                  <div className="col-md-4">
-                    <label className="form-label">Grade *</label>
-                    <select className="form-select" name="grade" value={formData.grade} onChange={handleChange}>
-                      <option value="">Select</option>
-                      {allowedGrades.length > 0 ? (
-                        allowedGrades.map((g) => <option key={g} value={`${g}th`}>{g}th</option>)
-                      ) : (
-                        <option disabled>No eligible grade</option>
-                      )}
-                    </select>
-                  </div>
-                  <div className="col-md-4">
-                    <label className="form-label">Gender *</label>
-                    <select className="form-select" name="gender" value={formData.gender} onChange={handleChange}>
-                      <option value="">Select</option>
-                      <option>Male</option>
-                      <option>Female</option>
-                      <option>Other</option>
-                    </select>
+                  <div className="modal-footer">
+                    <button className="btn btn-secondary" onClick={() => setShowForm(false)}>Cancel</button>
+                    <button className="btn btn-success" onClick={handleSubmitWithPayment}>Confirm & Pay ₹1050</button>
                   </div>
                 </div>
               </div>
-              <div className="modal-footer">
-                <button className="btn btn-secondary" onClick={() => setShowForm(false)}>Cancel</button>
-                <button className="btn btn-success" onClick={handleSubmitWithPayment}>Confirm & Pay ₹1050</button>
-              </div>
             </div>
-          </div>
+          )}
         </div>
-      )}
+      </div>
     </div>
-    </>
   );
 };
 

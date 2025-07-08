@@ -1,26 +1,12 @@
-.dps-top-navbar {
-  background-color: #fff;
-  border-bottom: 1px solid #ddd;
-  position: sticky;
-  top: 0;
-  z-index: 1000;
+.sidebar .btn {
+  font-size: 15px;
+  border-radius: 5px;
+  margin-bottom: 5px;
+  text-align: left;
 }
 
-.nav-logo {
-  height: 40px;
-}
-
-.school-name {
+.sidebar h4 {
   font-weight: 600;
-  color: #2c3e50;
-}
-.dps-top-navbar {
-  background-color: #2b3a83;
-  color: #fff;
-  padding: 10px 20px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  height: 50px;
-  flex-shrink: 0;
+  border-bottom: 1px solid #ffffff33;
+  padding-bottom: 10px;
 }
