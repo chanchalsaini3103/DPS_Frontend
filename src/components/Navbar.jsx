@@ -91,8 +91,8 @@ const AppNavbar = () => {
                 <Nav className="dps-nav-links">
                   <Nav.Link href="/">HOME</Nav.Link>
                   <NavDropdown title="ABOUT DPS" id="nav-about">
-                    <NavDropdown.Item>Vision</NavDropdown.Item>
-                    <NavDropdown.Item>Faculty</NavDropdown.Item>
+                    <NavDropdown.Item as={Link} to="/about/vision">Vision</NavDropdown.Item>
+              <NavDropdown.Item as={Link} to="/about/faculty">Faculty</NavDropdown.Item>
                   </NavDropdown>
                   <NavDropdown title="CURRICULUM" id="nav-curriculum">
                     <NavDropdown.Item>CBSE</NavDropdown.Item>

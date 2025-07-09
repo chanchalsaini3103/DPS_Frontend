@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Swal from "sweetalert2";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import "../styles/nav.css";
 
 const ParentDashboard = () => {
@@ -9,6 +9,8 @@ const ParentDashboard = () => {
   const [showForm, setShowForm] = useState(false);
   const [age, setAge] = useState("");
   const [allowedGrades, setAllowedGrades] = useState([]);
+  const [isSaved, setIsSaved] = useState(false);
+
   const [formData, setFormData] = useState({
     firstName: "",
     middleName: "",
@@ -18,17 +20,18 @@ const ParentDashboard = () => {
     grade: "",
     gender: "",
   });
-   const getTodayDate = () => {
+
+  const getTodayDate = () => {
     const today = new Date();
-    return today.toISOString().split("T")[0]; // 'YYYY-MM-DD'
+    return today.toISOString().split("T")[0];
   };
 
   useEffect(() => {
     const parentId = localStorage.getItem("parentId");
     if (!parentId) {
-      Swal.fire("Unauthorized", "Please login first.", "error").then(() => {
-        navigate("/dps-login");
-      });
+      Swal.fire("Unauthorized", "Please login first.", "error").then(() =>
+        navigate("/dps-login")
+      );
       return;
     }
 
@@ -58,44 +61,41 @@ const ParentDashboard = () => {
     });
     setAge("");
     setAllowedGrades([]);
+    setIsSaved(false);
   };
 
- const handleDobChange = (e) => {
-     const inputDate = new Date(e.target.value);
-     const today = new Date();
-     
- 
-     // Prevent future date selection
-     if (inputDate > today) {
-       Swal.fire("Invalid DOB", "Date of Birth cannot be in the future.", "error");
-       return;
-     }
- 
-     let calculatedAge = today.getFullYear() - inputDate.getFullYear();
-     if (
-       today.getMonth() < inputDate.getMonth() ||
-       (today.getMonth() === inputDate.getMonth() && today.getDate() < inputDate.getDate())
-     ) {
-       calculatedAge--;
-     }
- 
-     const formattedDob = `${inputDate.getDate().toString().padStart(2, "0")}-${(inputDate.getMonth() + 1)
-       .toString()
-       .padStart(2, "0")}-${inputDate.getFullYear()}`;
-     setFormData((prev) => ({ ...prev, dob: formattedDob }));
-     setAge(calculatedAge);
-     setIsSaved(false);
- 
-     const validGrade = calculatedAge - 5;
-     if (validGrade >= 1 && validGrade <= 10) {
-       setAllowedGrades([validGrade]);
-     } else {
-       setAllowedGrades([]);
-     }
-   };
+  const handleDobChange = (e) => {
+    const inputDate = new Date(e.target.value);
+    const today = new Date();
 
+    if (inputDate > today) {
+      Swal.fire("Invalid DOB", "Date of Birth cannot be in the future.", "error");
+      return;
+    }
 
+    let calculatedAge = today.getFullYear() - inputDate.getFullYear();
+    if (
+      today.getMonth() < inputDate.getMonth() ||
+      (today.getMonth() === inputDate.getMonth() && today.getDate() < inputDate.getDate())
+    ) {
+      calculatedAge--;
+    }
 
+    const formattedDob = `${inputDate.getDate().toString().padStart(2, "0")}-${(inputDate.getMonth() + 1)
+      .toString()
+      .padStart(2, "0")}-${inputDate.getFullYear()}`;
+
+    setFormData((prev) => ({ ...prev, dob: formattedDob }));
+    setAge(calculatedAge);
+    setIsSaved(false);
+
+    const validGrade = calculatedAge - 5;
+    if (validGrade >= 1 && validGrade <= 10) {
+      setAllowedGrades([validGrade]);
+    } else {
+      setAllowedGrades([]);
+    }
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -110,14 +110,14 @@ const ParentDashboard = () => {
     }
 
     Swal.fire({
-      title: "Payment Summary",
+      title: "Confirm Registration & Payment",
       html: `
-        <ul class="list-group">
+        <ul class="list-group text-start">
           <li class="list-group-item d-flex justify-content-between">Application Fee <strong>₹1000</strong></li>
           <li class="list-group-item d-flex justify-content-between">Convenience Fee <strong>₹50</strong></li>
           <li class="list-group-item d-flex justify-content-between bg-success text-white">Total <strong>₹1050</strong></li>
         </ul>
-        <br>Click "Confirm" to proceed with registration.`,
+        <br>Click "Confirm" to proceed.`,
       icon: "info",
       showCancelButton: true,
       confirmButtonText: "Confirm & Pay",
@@ -152,40 +152,21 @@ const ParentDashboard = () => {
   };
 
   return (
-
     <div className="container-fluid">
-      
       <div className="row">
-           <div className="col-md-2 bg-dark text-white min-vh-100 sidebar p-3">
+        {/* Sidebar */}
+        <div className="col-md-2 bg-dark text-white min-vh-100 p-3">
           <h4 className="text-white mb-4">👨‍👩‍👧 Parent Portal</h4>
           <ul className="nav flex-column">
-            <li className="nav-item mb-2">
-              <button className="btn btn-outline-light w-100 text-start">🏠 Dashboard</button>
-            </li>
-            <li className="nav-item mb-2">
-              <button className="btn btn-outline-light w-100 text-start">📋 My Children</button>
-            </li>
-            <li className="nav-item mb-2">
-              <button className="btn btn-outline-light w-100 text-start" onClick={handleAddChildClick}>➕ Add Child</button>
-            </li>
-            <li className="nav-item mb-2">
-              <button className="btn btn-outline-light w-100 text-start">👤 Profile</button>
-            </li>
-            <li className="nav-item mb-2">
-              <button className="btn btn-outline-light w-100 text-start">📄 Application Status</button>
-            </li>
-            <li className="nav-item mb-2">
-              <button className="btn btn-outline-light w-100 text-start">💳 Student Academics</button>
-            </li>
-            <li className="nav-item mb-2">
-              <button className="btn btn-outline-light w-100 text-start">📢 Notices / Announcements</button>
-            </li>
-            <li className="nav-item mb-2">
-              <button className="btn btn-outline-light w-100 text-start">📞 Help / Support</button>
-            </li>
-            <li className="nav-item mt-4">
-              <button className="btn btn-danger w-100 text-start" onClick={handleLogout}>🚪 Logout</button>
-            </li>
+            <li className="nav-item mb-2"><button className="btn btn-outline-light w-100">🏠 Dashboard</button></li>
+            <li className="nav-item mb-2"><button className="btn btn-outline-light w-100">📋 My Children</button></li>
+            <li className="nav-item mb-2"><button className="btn btn-outline-light w-100" onClick={handleAddChildClick}>➕ Add Child</button></li>
+            <li className="nav-item mb-2"><button className="btn btn-outline-light w-100">👤 Profile</button></li>
+            <li className="nav-item mb-2"><button className="btn btn-outline-light w-100">📄 Application Status</button></li>
+            <li className="nav-item mb-2"><button className="btn btn-outline-light w-100">📘 Student Academics</button></li>
+            <li className="nav-item mb-2"><button className="btn btn-outline-light w-100">📢 Announcements</button></li>
+            <li className="nav-item mb-2"><button className="btn btn-outline-light w-100">📞 Help / Support</button></li>
+            <li className="nav-item mt-3"><button className="btn btn-danger w-100" onClick={handleLogout}>🚪 Logout</button></li>
           </ul>
         </div>
 
@@ -194,98 +175,83 @@ const ParentDashboard = () => {
           <h2 className="text-center mb-4">Parent & Student Dashboard</h2>
 
           {parent && (
-            <div className="card mb-4 shadow">
-              <div className="card-header bg-dark text-white text-white">
-                <h5>Welcome ! {parent.fatherName} & {parent.motherName}</h5>
+            <div className="card shadow mb-4">
+              <div className="card-header bg-dark text-white">
+                <h5>Welcome, {parent.fatherName} & {parent.motherName}</h5>
                 <small>Email: {parent.fatherEmail || parent.motherEmail} | Phone: {parent.fatherPhone}</small>
               </div>
               <div className="card-body">
                 <h6>Children:</h6>
                 <table className="table table-bordered">
                   <thead>
-                    <tr>
-                      <th>Name</th>
-                      <th>DOB</th>
-                      <th>Grade</th>
-                      <th>Gender</th>
-                      <th>Payment</th>
-                    </tr>
+                    <tr><th>Name</th><th>DOB</th><th>Grade</th><th>Gender</th><th>Payment</th></tr>
                   </thead>
                   <tbody>
-                    {parent.students.map((student, i) => (
+                    {parent.students.map((s, i) => (
                       <tr key={i}>
-                        <td>{student.firstName} {student.lastName}</td>
-                        <td>{student.dob}</td>
-                        <td>{student.grade}</td>
-                        <td>{student.gender}</td>
-                        <td>{student.paymentCompleted ? "✅ Paid" : "❌ Pending"}</td>
+                        <td>{s.firstName} {s.lastName}</td>
+                        <td>{s.dob}</td>
+                        <td>{s.grade}</td>
+                        <td>{s.gender}</td>
+                        <td>{s.paymentCompleted ? "✅ Paid" : "❌ Pending"}</td>
                       </tr>
                     ))}
                   </tbody>
                 </table>
-                <button className="btn btn-primary mt-2" onClick={handleAddChildClick}>
-                  ➕ Add Another Child
-                </button>
+                <button className="btn btn-primary mt-3" onClick={handleAddChildClick}>➕ Add Another Child</button>
               </div>
             </div>
           )}
 
+          {/* Add Child Modal */}
           {showForm && (
             <div className="modal show d-block" tabIndex="-1">
               <div className="modal-dialog modal-lg mt-5">
                 <div className="modal-content">
                   <div className="modal-header">
-                    <h5 className="modal-title">Add New Child</h5>
+                    <h5 className="modal-title">Register New Child</h5>
                     <button type="button" className="btn-close" onClick={() => setShowForm(false)}></button>
                   </div>
                   <div className="modal-body">
                     <div className="row g-3">
+                      {/* Fields */}
+                      {["firstName", "middleName", "lastName"].map((field, i) => (
+                        <div className="col-md-4" key={i}>
+                          <label className="form-label">{field.replace("Name", " Name")} {field !== "middleName" && <span className="text-danger">*</span>}</label>
+                          <input name={field} className="form-control" value={formData[field]} onChange={handleChange} />
+                        </div>
+                      ))}
+
                       <div className="col-md-4">
-                        <label className="form-label">First Name *</label>
-                        <input type="text" name="firstName" className="form-control" value={formData.firstName} onChange={handleChange} />
-                      </div>
-                      <div className="col-md-4">
-                        <label className="form-label">Middle Name</label>
-                        <input type="text" name="middleName" className="form-control" value={formData.middleName} onChange={handleChange} />
-                      </div>
-                      <div className="col-md-4">
-                        <label className="form-label">Last Name *</label>
-                        <input type="text" name="lastName" className="form-control" value={formData.lastName} onChange={handleChange} />
-                      </div>
-                      <div className="col-md-4">
-                        <label className="form-label">Academic Year *</label>
+                        <label className="form-label">Academic Year <span className="text-danger">*</span></label>
                         <select className="form-select" name="academicYear" value={formData.academicYear} onChange={handleChange}>
                           <option value="">Select</option>
                           <option value="2025-26">2025-26</option>
                         </select>
                       </div>
-                      <div className="col-md-4">
-                        <label className="form-label">DOB *</label>
-                        <input
-  type="date"
-  className="form-control"
-  onChange={handleDobChange}
-  max={new Date().toISOString().split("T")[0]}
-/>
 
-                      </div>
                       <div className="col-md-4">
-                        <label className="form-label">Age</label>
+                        <label className="form-label">DOB <span className="text-danger">*</span></label>
+                        <input type="date" className="form-control" onChange={handleDobChange} max={getTodayDate()} />
+                      </div>
+
+                      <div className="col-md-4">
+                        <label className="form-label">Age <span className="text-danger">*</span></label>
                         <input type="text" className="form-control" value={age} readOnly />
                       </div>
+
                       <div className="col-md-4">
-                        <label className="form-label">Grade *</label>
+                        <label className="form-label">Grade <span className="text-danger">*</span></label>
                         <select className="form-select" name="grade" value={formData.grade} onChange={handleChange}>
                           <option value="">Select</option>
-                          {allowedGrades.length > 0 ? (
-                            allowedGrades.map((g) => <option key={g} value={`${g}th`}>{g}th</option>)
-                          ) : (
-                            <option disabled>No eligible grade</option>
-                          )}
+                          {allowedGrades.length > 0 ? allowedGrades.map((g) => (
+                            <option key={g} value={`${g}th`}>{g}th</option>
+                          )) : <option disabled>No eligible grade</option>}
                         </select>
                       </div>
+
                       <div className="col-md-4">
-                        <label className="form-label">Gender *</label>
+                        <label className="form-label">Gender <span className="text-danger">*</span></label>
                         <select className="form-select" name="gender" value={formData.gender} onChange={handleChange}>
                           <option value="">Select</option>
                           <option>Male</option>
