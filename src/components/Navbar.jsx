@@ -116,10 +116,8 @@ const AppNavbar = () => {
           </Navbar>
         </div>
       </div>
-      <div className="marquee-bar">
-        <div className="marquee-text">
-          Admissions open for Classes I & X for the academic session 2025–26.
-        </div>
+      <div>
+        <marquee  > Welcome to Delhi Public school</marquee>
       </div>
       <div className="hero-image-container">
         <img src="/dps.jpg" alt="Delhi Public School" className="hero-image" />

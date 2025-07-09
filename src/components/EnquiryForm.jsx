@@ -15,27 +15,37 @@ const EnquiryForm = () => {
     query: "",
   });
 
+   const phoneRegex = /^[0-9]{10}$/;
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log("Submitting form:", formData);
-   fetch(`${import.meta.env.VITE_API_BASE_URL}/api/enquiry`, {
-  method: "POST",
-  headers: {
-    "Content-Type": "application/json",
-  },
-  body: JSON.stringify(formData),
-})
-      .then((res) => {
-        if (res.ok) alert("✅ Enquiry submitted!");
-        else alert("❌ Failed to submit");
-      })
-      .catch((err) => alert("❌ Error: " + err.message));
-  };
+ const handleSubmit = (e) => {
+  e.preventDefault();
+
+  const phoneRegex = /^[789]\d{9}$/; // Starts with 7, 8, or 9 and has 10 digits
+  if (!phoneRegex.test(formData.contactNumber)) {
+    alert("❌ Please enter a valid 10-digit mobile number starting with 7, 8, or 9.");
+    return;
+  }
+
+  console.log("Submitting form:", formData);
+  fetch(`${import.meta.env.VITE_API_BASE_URL}/api/enquiry`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(formData),
+  })
+    .then((res) => {
+      if (res.ok) alert("✅ Enquiry submitted!");
+      else alert("❌ Failed to submit");
+    })
+    .catch((err) => alert("❌ Error: " + err.message));
+};
+
 
   return (
     <div className="container mt-4 p-4 border rounded bg-light">
@@ -95,7 +105,17 @@ const EnquiryForm = () => {
           </div>
           <div className="col-md-3">
             <label>Contact Number*</label>
-            <input name="contactNumber" type="tel" className="form-control" required value={formData.contactNumber} onChange={handleChange} />
+           <input
+  name="contactNumber"
+  type="tel"
+  className="form-control"
+  required
+  value={formData.contactNumber}
+  onChange={handleChange}
+  pattern="[789][0-9]{9}"
+  title="Mobile number must be 10 digits and start with 9, 8, or 7"
+/>
+
           </div>
         </div>
 
@@ -104,13 +124,19 @@ const EnquiryForm = () => {
             <label>Grade*</label>
             <select name="grade" className="form-control" value={formData.grade} onChange={handleChange} required>
               <option value="">Select Grade</option>
-              <option value="Nursery">Nursery</option>
-              <option value="LKG">LKG</option>
-              <option value="UKG">UKG</option>
+             
               <option value="Class 1">Class 1</option>
               <option value="Class 2">Class 2</option>
               <option value="Class 3">Class 3</option>
-              {/* Add more grades as needed */}
+               <option value="Class 4">Class 4</option>
+              <option value="Class 5">Class 5</option>
+              <option value="Class 6">Class 6</option>
+               <option value="Class 7">Class 7</option>
+              <option value="Class 8">Class 8</option>
+              <option value="Class 9">Class 9</option>
+              <option value="Class 10">Class 10</option>
+
+            
             </select>
           </div>
           <div className="col-md-6">

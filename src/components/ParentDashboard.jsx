@@ -56,31 +56,48 @@ const ParentDashboard = () => {
     setAllowedGrades([]);
   };
 
-  const handleDobChange = (e) => {
-    const inputDate = new Date(e.target.value);
-    const today = new Date();
-    let calculatedAge = today.getFullYear() - inputDate.getFullYear();
-    if (
-      today.getMonth() < inputDate.getMonth() ||
-      (today.getMonth() === inputDate.getMonth() && today.getDate() < inputDate.getDate())
-    ) {
-      calculatedAge--;
-    }
+ const handleDobChange = (e) => {
+  const input = e.target.value;
+  const inputDate = new Date(input);
+  const today = new Date();
 
-    const formattedDob = `${inputDate.getDate().toString().padStart(2, "0")}-${(inputDate.getMonth() + 1)
-      .toString()
-      .padStart(2, "0")}-${inputDate.getFullYear()}`;
+  // Validation: Future date not allowed
+  if (inputDate > today) {
+    Swal.fire("Invalid Date", "Date of Birth cannot be in the future.", "error");
+    return;
+  }
 
-    setFormData((prev) => ({ ...prev, dob: formattedDob }));
-    setAge(calculatedAge);
+  // Validation: Year must be 4 digits
+  const year = inputDate.getFullYear();
+  if (year.toString().length !== 4) {
+    Swal.fire("Invalid Year", "Year must be exactly 4 digits.", "error");
+    return;
+  }
 
-    const validGrade = calculatedAge - 5;
-    if (validGrade >= 1 && validGrade <= 10) {
-      setAllowedGrades([validGrade]);
-    } else {
-      setAllowedGrades([]);
-    }
-  };
+  // Calculate age
+  let calculatedAge = today.getFullYear() - year;
+  if (
+    today.getMonth() < inputDate.getMonth() ||
+    (today.getMonth() === inputDate.getMonth() && today.getDate() < inputDate.getDate())
+  ) {
+    calculatedAge--;
+  }
+
+  const formattedDob = `${inputDate.getDate().toString().padStart(2, "0")}-${(inputDate.getMonth() + 1)
+    .toString()
+    .padStart(2, "0")}-${year}`;
+
+  setFormData((prev) => ({ ...prev, dob: formattedDob }));
+  setAge(calculatedAge);
+
+  const validGrade = calculatedAge - 5;
+  if (validGrade >= 1 && validGrade <= 10) {
+    setAllowedGrades([validGrade]);
+  } else {
+    setAllowedGrades([]);
+  }
+};
+
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -137,10 +154,11 @@ const ParentDashboard = () => {
   };
 
   return (
+
     <div className="container-fluid">
+      
       <div className="row">
-        {/* Sidebar - Reduced Width */}
-        <div className="col-md-2 bg-dark text-white min-vh-100 sidebar p-3">
+           <div className="col-md-2 bg-dark text-white min-vh-100 sidebar p-3">
           <h4 className="text-white mb-4">👨‍👩‍👧 Parent Portal</h4>
           <ul className="nav flex-column">
             <li className="nav-item mb-2">
@@ -159,7 +177,7 @@ const ParentDashboard = () => {
               <button className="btn btn-outline-light w-100 text-start">📄 Application Status</button>
             </li>
             <li className="nav-item mb-2">
-              <button className="btn btn-outline-light w-100 text-start">💳 Payment History</button>
+              <button className="btn btn-outline-light w-100 text-start">💳 Student Academics</button>
             </li>
             <li className="nav-item mb-2">
               <button className="btn btn-outline-light w-100 text-start">📢 Notices / Announcements</button>
@@ -179,8 +197,8 @@ const ParentDashboard = () => {
 
           {parent && (
             <div className="card mb-4 shadow">
-              <div className="card-header bg-success text-white">
-                <h5>{parent.fatherName} & {parent.motherName}</h5>
+              <div className="card-header bg-dark text-white text-white">
+                <h5>Welcome ! {parent.fatherName} & {parent.motherName}</h5>
                 <small>Email: {parent.fatherEmail || parent.motherEmail} | Phone: {parent.fatherPhone}</small>
               </div>
               <div className="card-body">
@@ -245,7 +263,13 @@ const ParentDashboard = () => {
                       </div>
                       <div className="col-md-4">
                         <label className="form-label">DOB *</label>
-                        <input type="date" className="form-control" onChange={handleDobChange} />
+                        <input
+  type="date"
+  className="form-control"
+  onChange={handleDobChange}
+  max={new Date().toISOString().split("T")[0]}
+/>
+
                       </div>
                       <div className="col-md-4">
                         <label className="form-label">Age</label>
