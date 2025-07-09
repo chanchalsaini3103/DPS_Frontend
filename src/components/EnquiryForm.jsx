@@ -54,32 +54,37 @@ const EnquiryForm = () => {
 
         <div className="row mb-3">
           <div className="col-md-6">
-            <label>Academic Year*</label>
-            <input className="form-control" value={formData.academicYear} readOnly />
-          </div>
+  <label>Academic Year<span className="text-danger">*</span></label>
+  <select name="academicYear" className="form-control" value={formData.academicYear} onChange={handleChange} required>
+    <option value="2025 - 26">2025 - 26</option>
+    <option value="2026 - 27">2026 - 27</option>
+  </select>
+</div>
+
           <div className="col-md-6">
-            <label>Choose your School*</label>
-            <select name="school" className="form-control" value={formData.school} onChange={handleChange} required>
-              <option value="">Select School</option>
-              <option value="Pune DPS">Pune DPS</option>
-              <option value="Delhi DPS">Delhi DPS</option>
-            </select>
+            <label>Choose your School<span className="text-danger">*</span></label>
+           <select name="school" className="form-control" value={formData.school} onChange={handleChange} required>
+  <option value="">Select School</option>
+  <option value="Pune DPS">Pune DPS</option>
+  <option value="Delhi DPS">Delhi DPS</option>
+</select>
+
           </div>
         </div>
 
         <div className="row mb-3">
           <div className="col-md-6">
-            <label>First Name*</label>
+            <label>First Name<span className="text-danger">*</span></label>
             <input name="firstName" type="text" className="form-control" required value={formData.firstName} onChange={handleChange} />
           </div>
           <div className="col-md-6">
-            <label>Last Name*</label>
+            <label>Last Name<span className="text-danger">*</span></label>
             <input name="lastName" type="text" className="form-control" required value={formData.lastName} onChange={handleChange} />
           </div>
         </div>
 
         <div className="mb-3">
-          <label>I am*</label><br />
+          <label>I am<span className="text-danger">*</span></label><br />
           <div className="form-check form-check-inline">
             <input className="form-check-input" type="radio" name="relation" value="Father" onChange={handleChange} required />
             <label className="form-check-label">Father</label>
@@ -96,15 +101,15 @@ const EnquiryForm = () => {
 
         <div className="row mb-3">
           <div className="col-md-6">
-            <label>Email*</label>
+            <label>Email<span className="text-danger">*</span></label>
             <input name="email" type="email" className="form-control" required value={formData.email} onChange={handleChange} />
           </div>
           <div className="col-md-3">
-            <label>Country Code*</label>
+            <label>Country Code<span className="text-danger">*</span></label>
             <input name="countryCode" className="form-control" value={formData.countryCode} readOnly />
           </div>
           <div className="col-md-3">
-            <label>Contact Number*</label>
+            <label>Contact Number<span className="text-danger">*</span></label>
            <input
   name="contactNumber"
   type="tel"
@@ -121,7 +126,7 @@ const EnquiryForm = () => {
 
         <div className="row mb-3">
           <div className="col-md-6">
-            <label>Grade*</label>
+            <label>Grade<span className="text-danger">*</span></label>
             <select name="grade" className="form-control" value={formData.grade} onChange={handleChange} required>
               <option value="">Select Grade</option>
              

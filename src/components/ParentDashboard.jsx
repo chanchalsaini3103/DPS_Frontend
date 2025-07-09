@@ -18,6 +18,10 @@ const ParentDashboard = () => {
     grade: "",
     gender: "",
   });
+   const getTodayDate = () => {
+    const today = new Date();
+    return today.toISOString().split("T")[0]; // 'YYYY-MM-DD'
+  };
 
   useEffect(() => {
     const parentId = localStorage.getItem("parentId");
@@ -57,46 +61,40 @@ const ParentDashboard = () => {
   };
 
  const handleDobChange = (e) => {
-  const input = e.target.value;
-  const inputDate = new Date(input);
-  const today = new Date();
+     const inputDate = new Date(e.target.value);
+     const today = new Date();
+     
+ 
+     // Prevent future date selection
+     if (inputDate > today) {
+       Swal.fire("Invalid DOB", "Date of Birth cannot be in the future.", "error");
+       return;
+     }
+ 
+     let calculatedAge = today.getFullYear() - inputDate.getFullYear();
+     if (
+       today.getMonth() < inputDate.getMonth() ||
+       (today.getMonth() === inputDate.getMonth() && today.getDate() < inputDate.getDate())
+     ) {
+       calculatedAge--;
+     }
+ 
+     const formattedDob = `${inputDate.getDate().toString().padStart(2, "0")}-${(inputDate.getMonth() + 1)
+       .toString()
+       .padStart(2, "0")}-${inputDate.getFullYear()}`;
+     setFormData((prev) => ({ ...prev, dob: formattedDob }));
+     setAge(calculatedAge);
+     setIsSaved(false);
+ 
+     const validGrade = calculatedAge - 5;
+     if (validGrade >= 1 && validGrade <= 10) {
+       setAllowedGrades([validGrade]);
+     } else {
+       setAllowedGrades([]);
+     }
+   };
 
-  // Validation: Future date not allowed
-  if (inputDate > today) {
-    Swal.fire("Invalid Date", "Date of Birth cannot be in the future.", "error");
-    return;
-  }
 
-  // Validation: Year must be 4 digits
-  const year = inputDate.getFullYear();
-  if (year.toString().length !== 4) {
-    Swal.fire("Invalid Year", "Year must be exactly 4 digits.", "error");
-    return;
-  }
-
-  // Calculate age
-  let calculatedAge = today.getFullYear() - year;
-  if (
-    today.getMonth() < inputDate.getMonth() ||
-    (today.getMonth() === inputDate.getMonth() && today.getDate() < inputDate.getDate())
-  ) {
-    calculatedAge--;
-  }
-
-  const formattedDob = `${inputDate.getDate().toString().padStart(2, "0")}-${(inputDate.getMonth() + 1)
-    .toString()
-    .padStart(2, "0")}-${year}`;
-
-  setFormData((prev) => ({ ...prev, dob: formattedDob }));
-  setAge(calculatedAge);
-
-  const validGrade = calculatedAge - 5;
-  if (validGrade >= 1 && validGrade <= 10) {
-    setAllowedGrades([validGrade]);
-  } else {
-    setAllowedGrades([]);
-  }
-};
 
 
   const handleChange = (e) => {

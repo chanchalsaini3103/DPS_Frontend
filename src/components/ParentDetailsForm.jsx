@@ -1,9 +1,16 @@
 import React, { useState, useEffect } from "react";
 import Swal from "sweetalert2";
 import "bootstrap/dist/css/bootstrap.min.css";
-import "../styles/StudentDetailsForm.css"; // Reusing the same styling
+import "../styles/StudentDetailsForm.css"; // Reusing styling
 
-const ParentDetailsForm = ({ goToNextStep, goToPrevStep, selectedParentType, parentEmail, parentPhone, saveParentData }) => {
+const ParentDetailsForm = ({
+  goToNextStep,
+  goToPrevStep,
+  selectedParentType,
+  parentEmail,
+  parentPhone,
+  saveParentData
+}) => {
   const [formData, setFormData] = useState({
     fatherName: "",
     fatherEmail: "",
@@ -37,12 +44,24 @@ const ParentDetailsForm = ({ goToNextStep, goToPrevStep, selectedParentType, par
     setIsSaved(false);
   };
 
+  const isValidPhone = (phone) => {
+    return /^[789]\d{9}$/.test(phone);
+  };
+
   const handleSave = (e) => {
     e.preventDefault();
-    const { fatherName, fatherEmail, fatherPhone, motherName, motherEmail, motherPhone } = formData;
+    const {
+      fatherName, fatherEmail, fatherPhone,
+      motherName, motherEmail, motherPhone
+    } = formData;
 
     if (!fatherName || !fatherEmail || !fatherPhone || !motherName || !motherEmail || !motherPhone) {
       Swal.fire("Missing Details", "Please fill all required fields", "warning");
+      return;
+    }
+
+    if (!isValidPhone(fatherPhone) || !isValidPhone(motherPhone)) {
+      Swal.fire("Invalid Phone Number", "Phone number must start with 9, 8, or 7 and contain exactly 10 digits.", "error");
       return;
     }
 
@@ -74,11 +93,25 @@ const ParentDetailsForm = ({ goToNextStep, goToPrevStep, selectedParentType, par
           </div>
           <div className="col-md-4">
             <label className="form-label">Email ID <span className="text-danger">*</span></label>
-            <input type="email" className="form-control" name="fatherEmail" value={formData.fatherEmail} onChange={handleChange} />
+            <input
+              type="email"
+              className="form-control"
+              name="fatherEmail"
+              value={formData.fatherEmail}
+              onChange={handleChange}
+              readOnly={selectedParentType === "Father"}
+            />
           </div>
           <div className="col-md-4">
             <label className="form-label">Mobile No <span className="text-danger">*</span></label>
-            <input type="text" className="form-control" name="fatherPhone" value={formData.fatherPhone} onChange={handleChange} />
+            <input
+              type="text"
+              className="form-control"
+              name="fatherPhone"
+              value={formData.fatherPhone}
+              onChange={handleChange}
+              readOnly={selectedParentType === "Father"}
+            />
           </div>
         </div>
 
@@ -90,11 +123,25 @@ const ParentDetailsForm = ({ goToNextStep, goToPrevStep, selectedParentType, par
           </div>
           <div className="col-md-4">
             <label className="form-label">Email ID <span className="text-danger">*</span></label>
-            <input type="email" className="form-control" name="motherEmail" value={formData.motherEmail} onChange={handleChange} />
+            <input
+              type="email"
+              className="form-control"
+              name="motherEmail"
+              value={formData.motherEmail}
+              onChange={handleChange}
+              readOnly={selectedParentType === "Mother"}
+            />
           </div>
           <div className="col-md-4">
             <label className="form-label">Mobile No <span className="text-danger">*</span></label>
-            <input type="text" className="form-control" name="motherPhone" value={formData.motherPhone} onChange={handleChange} />
+            <input
+              type="text"
+              className="form-control"
+              name="motherPhone"
+              value={formData.motherPhone}
+              onChange={handleChange}
+              readOnly={selectedParentType === "Mother"}
+            />
           </div>
         </div>
 

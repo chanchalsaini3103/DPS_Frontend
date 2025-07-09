@@ -2,10 +2,11 @@ import React, { useState } from "react";
 import Swal from "sweetalert2";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../styles/StudentDetailsForm.css";
+
 const StudentDetailsForm = ({ goToNextStep, goToPrevStep, saveStudentData }) => {
   const [age, setAge] = useState("");
   const [allowedGrades, setAllowedGrades] = useState([]);
-  const [isSaved, setIsSaved] = useState(false); // Track if form is saved
+  const [isSaved, setIsSaved] = useState(false);
   const [formData, setFormData] = useState({
     firstName: "",
     middleName: "",
@@ -16,15 +17,28 @@ const StudentDetailsForm = ({ goToNextStep, goToPrevStep, saveStudentData }) => 
     gender: "",
   });
 
+  // ✅ Move this to top level
+  const getTodayDate = () => {
+    const today = new Date();
+    return today.toISOString().split("T")[0]; // 'YYYY-MM-DD'
+  };
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
-    setIsSaved(false); // Reset saved state on change
+    setIsSaved(false);
   };
 
   const handleDobChange = (e) => {
     const inputDate = new Date(e.target.value);
     const today = new Date();
+
+    // Prevent future date selection
+    if (inputDate > today) {
+      Swal.fire("Invalid DOB", "Date of Birth cannot be in the future.", "error");
+      return;
+    }
+
     let calculatedAge = today.getFullYear() - inputDate.getFullYear();
     if (
       today.getMonth() < inputDate.getMonth() ||
@@ -38,7 +52,7 @@ const StudentDetailsForm = ({ goToNextStep, goToPrevStep, saveStudentData }) => 
       .padStart(2, "0")}-${inputDate.getFullYear()}`;
     setFormData((prev) => ({ ...prev, dob: formattedDob }));
     setAge(calculatedAge);
-    setIsSaved(false); // Reset saved state on DOB change
+    setIsSaved(false);
 
     const validGrade = calculatedAge - 5;
     if (validGrade >= 1 && validGrade <= 10) {
@@ -56,7 +70,7 @@ const StudentDetailsForm = ({ goToNextStep, goToPrevStep, saveStudentData }) => 
       return;
     }
     Swal.fire("Saved", "Student details saved successfully", "success");
-    setIsSaved(true); // Set form as saved
+    setIsSaved(true);
     saveStudentData({ ...formData, age });
   };
 
@@ -84,9 +98,7 @@ const StudentDetailsForm = ({ goToNextStep, goToPrevStep, saveStudentData }) => 
           </div>
 
           <div className="col-md-4">
-            <label className="form-label">
-              Middle Name
-            </label>
+            <label className="form-label">Middle Name</label>
             <input
               type="text"
               className="form-control"
@@ -121,7 +133,7 @@ const StudentDetailsForm = ({ goToNextStep, goToPrevStep, saveStudentData }) => 
             >
               <option value="">Select</option>
               <option value="2025-26">2025-26</option>
-              
+              <option value="2026-27">2026-27</option>
             </select>
           </div>
 
@@ -132,6 +144,7 @@ const StudentDetailsForm = ({ goToNextStep, goToPrevStep, saveStudentData }) => 
             <input
               type="date"
               className="form-control"
+              max={getTodayDate()}
               onChange={handleDobChange}
             />
           </div>
@@ -202,11 +215,7 @@ const StudentDetailsForm = ({ goToNextStep, goToPrevStep, saveStudentData }) => 
             className="btn btn-primary"
             onClick={() => {
               if (!isSaved) {
-                Swal.fire(
-                  "Unsaved Form",
-                  "Please save the form before proceeding.",
-                  "warning"
-                );
+                Swal.fire("Unsaved Form", "Please save the form before proceeding.", "warning");
               } else {
                 goToNextStep();
               }

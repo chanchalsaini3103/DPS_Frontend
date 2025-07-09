@@ -118,7 +118,7 @@ const AppNavbar = () => {
       </div>
       <div className="marquee-bar">
         <div className="marquee-text">
-          Admissions open for Classes Nursery to VIII & XI for the academic
+          Admissions open for Classes Nursery to I & X for the academic
           session 2025–26.
         </div>
       </div>

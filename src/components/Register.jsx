@@ -28,49 +28,64 @@ const Register = () => {
     if (currentIndex > 0) setStep(steps[currentIndex - 1]);
   };
 
-  const validateInputs = () => {
-    const phoneRegex = /^[0-9]{10}$/;
-    if (!email.endsWith("@gmail.com")) {
-      alert("Email must be a valid @gmail.com address.");
-      return false;
-    }
-    if (!phoneRegex.test(phone)) {
-      alert("Phone number must be exactly 10 digits.");
-      return false;
-    }
-    if (!parentType) {
-      alert("Please select Father or Mother.");
-      return false;
-    }
-    return true;
-  };
+const validateInputs = () => {
+  const phoneRegex = /^[789]\d{9}$/;
+  if (!email.endsWith("@gmail.com")) {
+    alert("Email must be a valid @gmail.com address.");
+    return false;
+  }
+  if (!phoneRegex.test(phone)) {
+    alert("Phone number must start with 9, 8, or 7 and be exactly 10 digits.");
+    return false;
+  }
+  if (!parentType) {
+    alert("Please select Father or Mother.");
+    return false;
+  }
+  return true;
+};
 
-  const handleNext = () => {
-    if (step === "INTRODUCTION") {
-      if (!showOtp) {
-        if (!validateInputs()) return;
-        const newOtp = Math.floor(100000 + Math.random() * 900000).toString();
-        setGeneratedOtp(newOtp);
+const handleNext = () => {
+  if (step === "INTRODUCTION") {
+    if (!showOtp) {
+      if (!validateInputs()) return;
 
-        Swal.fire({
-          title: "OTP Sent!",
-          text: `Your OTP is: ${newOtp}`,
-          icon: "info",
-          confirmButtonText: "OK",
-        });
-
-        setShowOtp(true);
-        setTimer(45);
-        setResendCount(0);
+      // API: Check if parent already exists
+      fetch(`${import.meta.env.VITE_API_BASE_URL}/api/check-parent?email=${email}&phone=${phone}&type=${parentType}`)
+        .then(res => res.json())
+        .then(data => {
+          if (data.exists) {
+            Swal.fire(
+              "Already Registered",
+              "This email and mobile number are already registered. Please log in using your credentials.",
+              "warning"
+            );
+          } else {
+            const newOtp = Math.floor(100000 + Math.random() * 900000).toString();
+            setGeneratedOtp(newOtp);
+            Swal.fire({
+              title: "OTP Sent!",
+              text: `Your OTP is: ${newOtp}`,
+              icon: "info",
+              confirmButtonText: "OK",
+            });
+            setShowOtp(true);
+            setTimer(45);
+            setResendCount(0);
+          }
+        })
+        .catch(() => Swal.fire("Error", "Something went wrong while checking registration", "error"));
+    } else {
+      if (!otpVerified) {
+        Swal.fire("Error", "Please verify the OTP before proceeding.", "error");
       } else {
-        if (!otpVerified) {
-          Swal.fire("Error", "Please verify the OTP before proceeding.", "error");
-        } else {
-          setStep("STUDENT DETAILS");
-        }
+        setStep("STUDENT DETAILS");
       }
     }
-  };
+  }
+};
+
+
 
   const handleVerifyOtp = () => {
     if (otp === generatedOtp) {
