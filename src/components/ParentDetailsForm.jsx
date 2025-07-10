@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Swal from "sweetalert2";
 import "bootstrap/dist/css/bootstrap.min.css";
-import "../styles/StudentDetailsForm.css"; // Reusing styling
+import "../styles/StudentDetailsForm.css";
 
 const ParentDetailsForm = ({
   goToNextStep,

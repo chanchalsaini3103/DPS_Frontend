@@ -17,10 +17,9 @@ const StudentDetailsForm = ({ goToNextStep, goToPrevStep, saveStudentData }) => 
     gender: "",
   });
 
-  // ✅ Move this to top level
   const getTodayDate = () => {
     const today = new Date();
-    return today.toISOString().split("T")[0]; // 'YYYY-MM-DD'
+    return today.toISOString().split("T")[0]; 
   };
 
   const handleInputChange = (e) => {
@@ -33,7 +32,7 @@ const StudentDetailsForm = ({ goToNextStep, goToPrevStep, saveStudentData }) => 
     const inputDate = new Date(e.target.value);
     const today = new Date();
 
-    // Prevent future date selection
+   
     if (inputDate > today) {
       Swal.fire("Invalid DOB", "Date of Birth cannot be in the future.", "error");
       return;

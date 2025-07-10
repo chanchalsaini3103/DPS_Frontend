@@ -154,7 +154,7 @@ const ParentDashboard = () => {
   return (
     <div className="container-fluid">
       <div className="row">
-        {/* Sidebar */}
+       
         <div className="col-md-2 bg-dark text-white min-vh-100 p-3">
           <h4 className="text-white mb-4">👨‍👩‍👧 Parent Portal</h4>
           <ul className="nav flex-column">
@@ -170,7 +170,7 @@ const ParentDashboard = () => {
           </ul>
         </div>
 
-        {/* Main Content */}
+       
         <div className="col-md-10 p-4">
           <h2 className="text-center mb-4">Parent & Student Dashboard</h2>
 
@@ -204,7 +204,7 @@ const ParentDashboard = () => {
             </div>
           )}
 
-          {/* Add Child Modal */}
+        
           {showForm && (
             <div className="modal show d-block" tabIndex="-1">
               <div className="modal-dialog modal-lg mt-5">
@@ -215,7 +215,7 @@ const ParentDashboard = () => {
                   </div>
                   <div className="modal-body">
                     <div className="row g-3">
-                      {/* Fields */}
+                     
                       {["firstName", "middleName", "lastName"].map((field, i) => (
                         <div className="col-md-4" key={i}>
                           <label className="form-label">{field.replace("Name", " Name")} {field !== "middleName" && <span className="text-danger">*</span>}</label>

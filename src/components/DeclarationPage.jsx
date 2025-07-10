@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Swal from "sweetalert2";
 import "bootstrap/dist/css/bootstrap.min.css";
-import "../styles/StudentDetailsForm.css"; // Shared styling
+import "../styles/StudentDetailsForm.css"; 
 
 const DeclarationPage = ({ goToPrevStep, studentData, parentData, goToNextStep }) => {
   const [checked, setChecked] = useState(false);
@@ -23,7 +23,6 @@ const DeclarationPage = ({ goToPrevStep, studentData, parentData, goToNextStep }
     <div className="student-form-container">
       <h4 className="student-form-title text-primary mb-4">Declaration Summary</h4>
 
-      {/* Student Summary */}
       <div className="mb-4">
         <h5>Student Details</h5>
         <ul className="list-group">
@@ -35,7 +34,7 @@ const DeclarationPage = ({ goToPrevStep, studentData, parentData, goToNextStep }
         </ul>
       </div>
 
-      {/* Parent Summary */}
+    
       <div className="mb-4">
         <h5>Parent Details</h5>
         <ul className="list-group">
@@ -48,7 +47,6 @@ const DeclarationPage = ({ goToPrevStep, studentData, parentData, goToNextStep }
         </ul>
       </div>
 
-      {/* Declaration Checkbox */}
       <div className="form-check mt-4">
         <input className="form-check-input" type="checkbox" id="agree" onChange={(e) => setChecked(e.target.checked)} />
         <label className="form-check-label" htmlFor="agree">
@@ -56,7 +54,7 @@ const DeclarationPage = ({ goToPrevStep, studentData, parentData, goToNextStep }
         </label>
       </div>
 
-      {/* Navigation Buttons */}
+      
       <div className="d-flex justify-content-center gap-3 mt-4">
         <button type="button" className="btn btn-secondary" onClick={goToPrevStep}>Previous</button>
         <button type="button" className="btn btn-success" onClick={handleProceed}>

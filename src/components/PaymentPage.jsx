@@ -48,8 +48,7 @@ localStorage.removeItem("parentId");
   localStorage.removeItem("loggedInAs");
 localStorage.clear();
 
-              // Redirect to login after 3 seconds
-              setTimeout(() => {
+               setTimeout(() => {
                 navigate("/dps-login");
               }, 3000);
             } else if (res.status === 409) {

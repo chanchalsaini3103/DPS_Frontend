@@ -6,7 +6,9 @@ import DeclarationPage from "./DeclarationPage";
 import PaymentPage from "./PaymentPage";
 import Swal from "sweetalert2";
 import Footer from "./Footer";
-import { Link } from "react-router-dom"; // make sure this is imported
+import { Link } from "react-router-dom"; 
+
+
 const Register = () => {
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
@@ -50,7 +52,6 @@ const handleNext = () => {
     if (!showOtp) {
       if (!validateInputs()) return;
 
-      // API: Check if parent already exists
       fetch(`${import.meta.env.VITE_API_BASE_URL}/api/check-parent?email=${email}&phone=${phone}&type=${parentType}`)
         .then(res => res.json())
         .then(data => {
@@ -110,7 +111,7 @@ const handleNext = () => {
 
   return (
     <div className="register-page">
-      {/* HEADER + Progress */}
+    
       <div className="register-header">
         <img src="/dps-logo.png" alt="DPS Logo" className="register-logo" />
         <div className="register-school-info">
@@ -133,7 +134,7 @@ const handleNext = () => {
         ))}
       </div>
 
-      {/* STEPWISE COMPONENTS */}
+     
       {step === "INTRODUCTION" && (
         <div className="register-form-box">
           <h3 className="form-title">INTRODUCTION</h3>

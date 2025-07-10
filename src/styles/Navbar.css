@@ -28,8 +28,8 @@
   font-family: 'Georgia', 'Times New Roman', serif;
   font-size: 20px;
   font-weight: bold;
-  color: #2b3a83; /* dark green */
-  margin-left: 20px; /* space between logo and text */
+  color: #2b3a83; 
+  margin-left: 20px; 
   line-height: 1.3;
   text-transform: uppercase;
 }
@@ -61,11 +61,11 @@
 }
 
 .dps-btn.inquiry {
-  background-color: #2b3a83; /* VIBGYOR deep blue */
+  background-color: #2b3a83;
 }
 
 .dps-btn.login {
-  background-color: #7a3e8e; /* VIBGYOR purple */
+  background-color: #7a3e8e;
    text-decoration: none;
 }
 
@@ -121,4 +121,49 @@
     transform: translateX(-100%);
   }
 }
-/* HeroPage.css or Navbar.css */
+
+.enquiry-overlay-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 9999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.enquiry-overlay-content {
+  background: #fff;
+  padding: 2rem;
+  border-radius: 12px;
+  max-width: 800px;
+  width: 95%;
+  max-height: 90vh;
+  overflow-y: auto;
+  position: relative;
+  animation: slideIn 0.3s ease-in-out;
+}
+
+.enquiry-close-btn {
+  position: absolute;
+  top: 8px;
+  right: 12px;
+  border: none;
+  background: transparent;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateY(-20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
