@@ -65,37 +65,48 @@ const ParentDashboard = () => {
   };
 
   const handleDobChange = (e) => {
-    const inputDate = new Date(e.target.value);
-    const today = new Date();
+  const inputDate = new Date(e.target.value);
+  const today = new Date();
 
-    if (inputDate > today) {
-      Swal.fire("Invalid DOB", "Date of Birth cannot be in the future.", "error");
-      return;
-    }
+  const inputYear = inputDate.getFullYear();
+  if (!e.target.value || inputYear < 1000) {
+    return; // Don't validate yet if year is not fully entered
+  }
 
-    let calculatedAge = today.getFullYear() - inputDate.getFullYear();
-    if (
-      today.getMonth() < inputDate.getMonth() ||
-      (today.getMonth() === inputDate.getMonth() && today.getDate() < inputDate.getDate())
-    ) {
-      calculatedAge--;
-    }
+  if (inputDate > today) {
+    Swal.fire("Invalid DOB", "Date of Birth cannot be in the future.", "error");
+    return;
+  }
 
-    const formattedDob = `${inputDate.getDate().toString().padStart(2, "0")}-${(inputDate.getMonth() + 1)
-      .toString()
-      .padStart(2, "0")}-${inputDate.getFullYear()}`;
+  let calculatedAge = today.getFullYear() - inputDate.getFullYear();
+  if (
+    today.getMonth() < inputDate.getMonth() ||
+    (today.getMonth() === inputDate.getMonth() && today.getDate() < inputDate.getDate())
+  ) {
+    calculatedAge--;
+  }
 
-    setFormData((prev) => ({ ...prev, dob: formattedDob }));
-    setAge(calculatedAge);
-    setIsSaved(false);
+  if (calculatedAge > 100) {
+    Swal.fire("Invalid DOB", "Age cannot be more than 100 years.", "error");
+    return;
+  }
 
-    const validGrade = calculatedAge - 5;
-    if (validGrade >= 1 && validGrade <= 10) {
-      setAllowedGrades([validGrade]);
-    } else {
-      setAllowedGrades([]);
-    }
-  };
+  const formattedDob = `${inputDate.getDate().toString().padStart(2, "0")}-${(inputDate.getMonth() + 1)
+    .toString()
+    .padStart(2, "0")}-${inputDate.getFullYear()}`;
+
+  setFormData((prev) => ({ ...prev, dob: formattedDob }));
+  setAge(calculatedAge);
+  setIsSaved(false);
+
+  const validGrade = calculatedAge - 5;
+  if (validGrade >= 1 && validGrade <= 10) {
+    setAllowedGrades([validGrade]);
+  } else {
+    setAllowedGrades([]);
+  }
+};
+
 
   const handleChange = (e) => {
     const { name, value } = e.target;
