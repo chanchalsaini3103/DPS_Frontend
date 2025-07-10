@@ -179,6 +179,7 @@ const ParentDashboard = () => {
               <div className="card-header bg-dark text-white">
                 <h5>Welcome, {parent.fatherName} & {parent.motherName}</h5>
                 <small>Email: {parent.fatherEmail || parent.motherEmail} | Phone: {parent.fatherPhone}</small>
+                
               </div>
               <div className="card-body">
                 <h6>Children:</h6>
